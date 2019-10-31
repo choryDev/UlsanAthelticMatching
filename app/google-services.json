@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "154527320100",
+    "firebase_url": "https://cccompanytalk.firebaseio.com",
+    "project_id": "cccompanytalk",
+    "storage_bucket": "cccompanytalk.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:154527320100:android:2f3ec62cb365ecd260f0b1",
+        "android_client_info": {
+          "package_name": "com.example.ulsanathelticmatching"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "154527320100-n59552ltij9utkco4ovgnf56380eru5a.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.ulsanathelticmatching",
+            "certificate_hash": "7f92c480e71091c23235035f1e1db66a6da6d192"
+          }
+        },
+        {
+          "client_id": "154527320100-2srleikj7q0cgm2q7cknb7san8o4s45q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBy9mDRs7L8YlywDbdpOw6K1Yv241eAbIE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "154527320100-2srleikj7q0cgm2q7cknb7san8o4s45q.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

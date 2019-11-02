@@ -6,11 +6,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.ulsanathelticmatching.MainActivity;
+import com.example.ulsanathelticmatching.main.SelectSportsActivity;
 import com.example.ulsanathelticmatching.R;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
@@ -64,12 +63,12 @@ public class SignInActivity extends AppCompatActivity implements GoogleApiClient
             callbackManager = CallbackManager.Factory.create();
             loginButton.setReadPermissions(Arrays.asList("email"));
         }else{
-            Intent myintent = new Intent(SignInActivity.this, MainActivity.class);
+            Intent myintent = new Intent(SignInActivity.this, SelectSportsActivity.class);
             startActivity(myintent);
         }
 
         textView2 = (TextView)findViewById(R.id.textViwe2);
-        ////////////////////////////////////////////////////////
+        ///////////////////////////////////////////////////////////////////////////////////////
             GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
@@ -127,12 +126,12 @@ public class SignInActivity extends AppCompatActivity implements GoogleApiClient
     }
 
     private void openRegist(View v) {
-        Intent i = new Intent(this, MainActivity.class);
+        Intent i = new Intent(this, SelectSportsActivity.class);
         startActivity(i);
     }
 
     private void openLogin(View v) {
-        Intent i = new Intent(this, MainActivity.class);
+        Intent i = new Intent(this, SelectSportsActivity.class);
         startActivity(i);
     }
 
@@ -177,6 +176,11 @@ public class SignInActivity extends AppCompatActivity implements GoogleApiClient
 
     public void goSignUp(View view) {
         Intent i = new Intent(getApplicationContext(), SignUpActivity.class);
+        startActivity(i);
+    }
+
+    public void goTEST(View view) {
+        Intent i = new Intent(getApplicationContext(), SelectSportsActivity.class);
         startActivity(i);
     }
 }

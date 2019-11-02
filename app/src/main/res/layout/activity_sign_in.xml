@@ -35,9 +35,14 @@
         android:onClick="buttonclickLoginFb"/>
 
     <Button
-        android:onClick="goSignUp"
         android:id="@+id/SignInActivity_Signup_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="회원가입하기"/>
+        android:onClick="goSignUp"
+        android:text="아직 회원이 아니세요?" />
+    <Button
+        android:onClick="goTEST"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="로그인 됬다는 가정한 다음창(예비)"/>
 </LinearLayout>

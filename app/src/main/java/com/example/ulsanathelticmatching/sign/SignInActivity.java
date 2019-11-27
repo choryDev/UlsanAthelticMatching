@@ -5,10 +5,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.ulsanathelticmatching.main.MainActivity;
 import com.example.ulsanathelticmatching.main.SelectSportsActivity;
 import com.example.ulsanathelticmatching.R;
 import com.facebook.AccessToken;
@@ -46,12 +48,11 @@ public class SignInActivity extends AppCompatActivity implements GoogleApiClient
     FirebaseUser user;
     LoginButton loginButton;
     CallbackManager callbackManager;
-    TextView textView2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sign_in);
+        setContentView(R.layout.activity_sign_up);
         mAuth = FirebaseAuth.getInstance();
 
         //////////////////////페북 강의/////////////////////////
@@ -67,9 +68,8 @@ public class SignInActivity extends AppCompatActivity implements GoogleApiClient
             startActivity(myintent);
         }
 
-        textView2 = (TextView)findViewById(R.id.textViwe2);
         ///////////////////////////////////////////////////////////////////////////////////////
-            GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
                 .build();
@@ -84,6 +84,20 @@ public class SignInActivity extends AppCompatActivity implements GoogleApiClient
                 startActivityForResult(signInIntent, RC_SIGN_IN);
             }
         });
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        // Check if user is signed in (non-null) and update UI accordingly.
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if(currentUser == null){
+            Log.d("애러 내용", "로그인 안되어 있음 세션 없음");
+        }else{
+            finish();
+            Intent i = new Intent(this, MainActivity.class);
+            startActivity(i);
+        }
     }
 
     public void buttonclickLoginFb(View v){
@@ -113,7 +127,9 @@ public class SignInActivity extends AppCompatActivity implements GoogleApiClient
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
                             FirebaseUser myuser = mAuth.getCurrentUser();
-                            updateUI(myuser);
+                            finish();
+                            Intent i = new Intent(SignInActivity.this, MainActivity.class);
+                            startActivity(i);
                         }else{
                             Toast.makeText(SignInActivity.this, "파이어베이스에 등록 되지 않습니다", Toast.LENGTH_SHORT).show();
                         }
@@ -121,25 +137,11 @@ public class SignInActivity extends AppCompatActivity implements GoogleApiClient
                 });
     }
 
-    private void updateUI(FirebaseUser myuser) {
-        textView2.setText(myuser.getEmail());
-    }
-
-    private void openRegist(View v) {
-        Intent i = new Intent(this, SelectSportsActivity.class);
-        startActivity(i);
-    }
-
-    private void openLogin(View v) {
-        Intent i = new Intent(this, SelectSportsActivity.class);
-        startActivity(i);
-    }
-
-    ////////////////////구글 로긴 부분 ///////////////////////////////////////////
+    ////////////////////구글 가입 부분 ///////////////////////////////////////////
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         callbackManager.onActivityResult(requestCode, resultCode, data);
-            super.onActivityResult(requestCode, resultCode, data);
+        super.onActivityResult(requestCode, resultCode, data);
         // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
         if (requestCode == RC_SIGN_IN) {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
@@ -174,13 +176,8 @@ public class SignInActivity extends AppCompatActivity implements GoogleApiClient
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
     }
 
-    public void goSignUp(View view) {
-        Intent i = new Intent(getApplicationContext(), SignUpActivity.class);
-        startActivity(i);
-    }
-
     public void goTEST(View view) {
-        Intent i = new Intent(getApplicationContext(), SelectSportsActivity.class);
+        Intent i = new Intent(getApplicationContext(), MainActivity.class);
         startActivity(i);
     }
 }

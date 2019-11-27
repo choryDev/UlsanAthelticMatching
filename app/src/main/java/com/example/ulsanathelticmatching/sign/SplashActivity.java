@@ -69,7 +69,7 @@ public class SplashActivity extends AppCompatActivity {
 
             builder.create().show();
         }else{
-            startActivity(new Intent(this,SignInActivity.class));
+            startActivity(new Intent(this, SignInActivity.class));
             finish();
         }
     }

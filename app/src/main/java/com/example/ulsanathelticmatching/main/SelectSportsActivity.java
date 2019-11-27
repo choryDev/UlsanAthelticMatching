@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
 import com.example.ulsanathelticmatching.R;
+import com.example.ulsanathelticmatching.sign.SignInActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -53,7 +54,7 @@ public class SelectSportsActivity extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view,int position, long id) {
-                Intent intent = new Intent(getApplicationContext(), SignUpActivity.class); // 다음넘어갈 화면
+                Intent intent = new Intent(getApplicationContext(), SignInActivity.class); // 다음넘어갈 화면
                 Bitmap sendBitmap = menu_obj_list.get(position).image;
 
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();

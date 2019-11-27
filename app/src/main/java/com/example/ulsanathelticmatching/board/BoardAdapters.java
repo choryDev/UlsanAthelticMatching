@@ -6,7 +6,7 @@ import android.widget.BaseAdapter;
 
 import java.util.ArrayList;
 
-public class BoardAdapters extends BaseAdapter {
+public class BoardAdapters extends RecyclerView.Adapter<RecyclerAdapter.ItemViewHolder> {
     private ArrayList<BoardItem> boardItems = new ArrayList<>();
     @Override
     public int getCount() {

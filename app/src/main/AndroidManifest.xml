@@ -11,7 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".sign.SignUpActivity"></activity>
+        <activity android:name=".board.BoardListActivity"></activity>
+        <activity android:name=".board.WriteActivity" />
         <activity
             android:name=".main.SelectSportsActivity"
             android:label="@string/title_activity_select_sports"

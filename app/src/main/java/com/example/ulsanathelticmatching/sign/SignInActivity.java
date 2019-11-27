@@ -52,7 +52,7 @@ public class SignInActivity extends AppCompatActivity implements GoogleApiClient
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sign_up);
+        setContentView(R.layout.activity_sign_in);
         mAuth = FirebaseAuth.getInstance();
 
         //////////////////////페북 강의/////////////////////////

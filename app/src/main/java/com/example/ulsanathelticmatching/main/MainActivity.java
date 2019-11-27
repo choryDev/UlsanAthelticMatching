@@ -6,8 +6,8 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.example.ulsanathelticmatching.R;
+import com.example.ulsanathelticmatching.board.WriteActivity;
 import com.example.ulsanathelticmatching.sign.SignInActivity;
 import com.example.ulsanathelticmatching.sign.SplashActivity;
 import com.facebook.login.LoginManager;
@@ -131,8 +131,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (id == R.id.nav_home) {
             // Handle the camera action
         } else if (id == R.id.nav_gallery) {
-            Intent i = new Intent(getApplicationContext(), SplashActivity.class);
+            Intent i = new Intent(this, WriteActivity.class);
             startActivity(i);
+            finish();
         } else if (id == R.id.nav_slideshow) {
 
         } else if (id == R.id.nav_tools) {

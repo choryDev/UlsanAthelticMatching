@@ -11,15 +11,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <activity
             android:name=".main.MainActivity"
             android:label="@string/title_activity_main"
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity android:name=".sign.SignInActivity" />
-        <activity
-            android:name=".main.SelectSportsActivity"
-            android:label="@string/title_activity_select_sports"
-            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".board.BoardListActivity"></activity>
+        <activity android:name=".board.WriteActivity" />
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"

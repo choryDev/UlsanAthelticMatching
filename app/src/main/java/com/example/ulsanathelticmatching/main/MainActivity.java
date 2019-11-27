@@ -9,7 +9,6 @@ import com.bumptech.glide.Glide;
 import com.example.ulsanathelticmatching.R;
 import com.example.ulsanathelticmatching.board.WriteActivity;
 import com.example.ulsanathelticmatching.sign.SignInActivity;
-import com.example.ulsanathelticmatching.sign.SplashActivity;
 import com.facebook.login.LoginManager;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 

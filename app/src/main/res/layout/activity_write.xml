@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:gravity="center"
     tools:context=".board.WriteActivity">
 
     <LinearLayout
@@ -60,27 +61,36 @@
 
         <EditText
             android:id="@+id/edt_content"
-            android:layout_width="match_parent"
-            android:layout_height="500dp"
-            android:hint="내용" />
+            android:inputType="textMultiLine"
+            android:lines="15"
+            android:minLines="13"
+            android:maxLines="17"
+            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
+            android:scrollbars="vertical"
+            android:hint="내용"
+            android:layout_marginBottom="32dp"/>
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="60dp">
+
         <Button
             android:id="@+id/btn_save"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:text="저  장"/>
+            android:layout_weight="1"
+            android:text="저  장" />
+
         <Button
             android:id="@+id/btn_cancel"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:text="취  소"/>
+            android:layout_weight="1"
+            android:text="취  소" />
 
     </LinearLayout>
 

@@ -165,6 +165,9 @@ public class SignInActivity extends AppCompatActivity implements GoogleApiClient
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             Toast.makeText(SignInActivity.this, "아이디 생성이 완료 되었습니다", Toast.LENGTH_SHORT).show();
+                            Intent i = new Intent(SignInActivity.this, MainActivity.class);
+                            startActivity(i);
+                            finish();
                         } else {
                             Toast.makeText(SignInActivity.this, "구글 로그인 실패 되었습니다", Toast.LENGTH_SHORT).show();
                         }

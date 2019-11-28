@@ -1,15 +1,16 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/messageItem_linearlayout_main"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:id="@+id/messageItem_linearlayout_main">
+    android:orientation="horizontal">
 
     <LinearLayout
         android:id="@+id/messageItem_linearlayout_destination"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
+        android:gravity="center"
         android:orientation="vertical">
 
         <ImageView
@@ -22,11 +23,33 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="이름" />
-    </LinearLayout>
 
+<<<<<<< HEAD
     <TextView
         android:id="@+id/messageItem_textView_message"
+=======
+    </LinearLayout>
+
+    <LinearLayout
+>>>>>>> b4fbfa48687f8755b6777df9a639310b30af3382
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/messageItem_textView_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="메세지" />
+
+        <TextView
+            android:id="@+id/messageItem_textView_timestamp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2019.09.06"
+            android:textColor="@android:color/darker_gray"
+            android:textSize="9dp" />
+
+    </LinearLayout>
 
 </LinearLayout>

@@ -1,6 +1,8 @@
 package com.example.ulsanathelticmatching.board;
 
-public class BoardItem {
+import java.io.Serializable;
+
+public class BoardItem implements Serializable {
     public String primarykey;
     public String uid;
     public String name;

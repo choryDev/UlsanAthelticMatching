@@ -9,21 +9,10 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-
 import com.bumptech.glide.Glide;
 import com.example.ulsanathelticmatching.R;
-import com.example.ulsanathelticmatching.board.BoardItem;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
-import java.net.URI;
-import java.util.ArrayList;
 import java.util.List;
-
-import static java.net.URI.*;
 
 public class BoardAdapters extends BaseAdapter {
     private Context mContext = null;
@@ -31,29 +20,14 @@ public class BoardAdapters extends BaseAdapter {
     private List<BoardItem> boardItemslist = null;
     private LayoutInflater inflater = null;
 
-    public BoardAdapters(Context c, int l) {
-        boardItemslist = new ArrayList<>();
+    public BoardAdapters(Context c, int l, List<BoardItem> boardItemslist) {
 
-        FirebaseDatabase.getInstance().getReference().child("BoardItem").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                boardItemslist.clear();
-                for(DataSnapshot item : dataSnapshot.getChildren()){
-                    BoardItem boardItem = item.getValue(BoardItem.class);
-                    boardItemslist.add(boardItem);
-                }
-                notifyDataSetChanged();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-
+        this.boardItemslist = boardItemslist;
         this.mContext = c;
         this.layout = l;
         this.inflater = (LayoutInflater) c.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+        notifyDataSetChanged();
     }
 
     @Override

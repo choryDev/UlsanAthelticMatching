@@ -7,6 +7,7 @@ import com.bumptech.glide.Glide;
 import com.example.ulsanathelticmatching.R;
 import com.example.ulsanathelticmatching.board.BoardAdapters;
 import com.example.ulsanathelticmatching.board.BoardDescActivity;
+import com.example.ulsanathelticmatching.board.BoardItem;
 import com.example.ulsanathelticmatching.board.WriteActivity;
 import com.example.ulsanathelticmatching.sign.SignInActivity;
 import com.facebook.login.LoginManager;
@@ -14,10 +15,16 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import android.util.Log;
 import android.view.View;
+
+import androidx.annotation.NonNull;
 import androidx.core.view.GravityCompat;
 import android.view.MenuItem;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
@@ -26,6 +33,10 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -38,6 +49,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private ImageView authAvatar;
 
     BoardAdapters myadapter;
+    List<BoardItem> boardItemslist;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,16 +58,33 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         mAuth = FirebaseAuth.getInstance();
 
+        boardItemslist = new ArrayList<>();
+        FirebaseDatabase.getInstance().getReference().child("BoardItem").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                boardItemslist.clear();
+                for(DataSnapshot item : dataSnapshot.getChildren()){
+                    BoardItem boardItem = item.getValue(BoardItem.class);
+                    boardItemslist.add(boardItem);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
         listView = (ListView)findViewById(R.id.MainActivity_listview);
 
-        myadapter = new BoardAdapters(getApplicationContext(),R.layout.activity_board_items);
+        myadapter = new BoardAdapters(getApplicationContext(), R.layout.activity_board_items, boardItemslist);
         listView.setAdapter(myadapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view,int position, long id) {
                 Intent intent = new Intent(getApplicationContext(), BoardDescActivity.class); // 다음넘어갈 화면
-                intent.putExtra("index", position);
+                intent.putExtra("OBJECT", (Serializable) boardItemslist.get(position));
                 startActivity(intent);
             }
         });

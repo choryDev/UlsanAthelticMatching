@@ -51,8 +51,8 @@ public class ChatActivity extends AppCompatActivity {
     class ChatRecycleViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
         //채팅목록 가져오기
         private List<ChatModel> chatModels = new ArrayList<>(); //채팅에 대한 모델을 가진 리스트
-        private String uid; //
-        private ArrayList<String> destinationUsers = new ArrayList<>();
+        private String uid;
+        private ArrayList<String> destinationUsers = new ArrayList<>(); //대화할 사람들에 대한 내용
 
         public ChatRecycleViewAdapter() {
             uid = FirebaseAuth.getInstance().getCurrentUser().getUid(); //현재 uid
@@ -86,15 +86,15 @@ public class ChatActivity extends AppCompatActivity {
         }
 
         @Override
-        public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+        public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
             //데이터를 바인딩
             final CustomViewHolder customViewHolder = (CustomViewHolder) holder;
             String destinationUid = null;
             // 챗방에 있는 유저를 모두 체크
             for (String user : chatModels.get(position).users.keySet()) { //방의 유저 키
                 if (!user.equals(uid)) { //내가 아닌 사람
-                    destinationUid = user;
-                    destinationUsers.add(destinationUid);
+                    destinationUid = user; //대화 목적 id = user
+                    destinationUsers.add(destinationUid);  //배열에 uid 포함
                 }
             }
             //상대방
@@ -125,11 +125,11 @@ public class ChatActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(view.getContext(), MessageActivity.class);
-                    intent.putExtra("destinationUid", destinationUsers.get(position));
+                    intent.putExtra("destinationUid",destinationUsers.get(position));
 
                     ActivityOptions activityOptions = null;
                     if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
-                     //   activityOptions = ActivityOptions.makeCustomAnimation(view.getContext(), R.anim.fromright, R.anim.toleft);
+                        activityOptions = ActivityOptions.makeCustomAnimation(view.getContext(), R.anim.fromright, R.anim.toleft);
                         startActivity(intent, activityOptions.toBundle());
                     }
                 }

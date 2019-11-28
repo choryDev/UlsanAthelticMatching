@@ -9,6 +9,7 @@ import com.example.ulsanathelticmatching.board.BoardAdapters;
 import com.example.ulsanathelticmatching.board.BoardDescActivity;
 import com.example.ulsanathelticmatching.board.BoardItem;
 import com.example.ulsanathelticmatching.board.WriteActivity;
+import com.example.ulsanathelticmatching.chat.ChatActivity;
 import com.example.ulsanathelticmatching.sign.SignInActivity;
 import com.facebook.login.LoginManager;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -136,9 +137,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         int id = item.getItemId();
 
         if (id == R.id.nav_home) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
             Intent i = new Intent(this, WriteActivity.class);
+            startActivity(i);
+        } else if (id == R.id.nav_gallery) {
+            Intent i = new Intent(this, ChatActivity.class);
             startActivity(i);
         } else if (id == R.id.nav_slideshow) {
 

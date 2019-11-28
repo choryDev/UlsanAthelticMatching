@@ -83,8 +83,10 @@ public class WriteActivity extends AppCompatActivity {
                 String date = tv_date.getText().toString();
                 String content = edt_content.getText().toString();
 
-                if(title == "" ||date == "" || content == ""  )
+                if(title == "" ||date == "" || content == ""  ){
                     Toast.makeText(getApplicationContext(), "제목 날짜 내용 기입해주세요", Toast.LENGTH_SHORT).show();
+                    return;
+                }
 
                 SimpleDateFormat pkformat = new SimpleDateFormat ( "yyyyMMddHHmmss");
                 Date time = new Date();

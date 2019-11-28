@@ -24,7 +24,6 @@
             android:text="이름" />
     </LinearLayout>
 
-
     <TextView
         android:id="@+id/messageItem_textView_message"
         android:layout_width="wrap_content"

@@ -62,7 +62,7 @@ public class SignInActivity extends AppCompatActivity implements GoogleApiClient
         setContentView(R.layout.activity_sign_in);
         mAuth = FirebaseAuth.getInstance();
 
-        //////////////////////페북 강의/////////////////////////
+        //////////////////////페북 로그인/////////////////////////
         if(user == null){
             setContentView(R.layout.activity_sign_in);
             FacebookSdk.sdkInitialize(getApplicationContext());
@@ -170,10 +170,15 @@ public class SignInActivity extends AppCompatActivity implements GoogleApiClient
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
-                            FirebaseUser myuser = mAuth.getCurrentUser();
-                            finish();
-                            Intent i = new Intent(SignInActivity.this, MainActivity.class);
-                            startActivity(i);
+                            if(checkNewRegister()){
+                                Toast.makeText(SignInActivity.this, "사용자님 반갑습니다^^", Toast.LENGTH_SHORT).show();
+                                Intent i = new Intent(SignInActivity.this, MainActivity.class);
+                                startActivity(i);
+                                finish();
+                            }else{
+                                Toast.makeText(SignInActivity.this, "신규 사용자님 반갑습니다^^", Toast.LENGTH_SHORT).show();
+                                makeUsersTable();
+                            }
                         }else{
                             Toast.makeText(SignInActivity.this, "파이어베이스에 등록 되지 않습니다", Toast.LENGTH_SHORT).show();
                         }
@@ -209,12 +214,12 @@ public class SignInActivity extends AppCompatActivity implements GoogleApiClient
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             if(checkNewRegister()){
-                                Toast.makeText(SignInActivity.this, "신규 사용자님 반갑습니다^^", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(SignInActivity.this, "사용자님 반갑습니다^^", Toast.LENGTH_SHORT).show();
                                     Intent i = new Intent(SignInActivity.this, MainActivity.class);
                                     startActivity(i);
                                     finish();
                             }else{
-                                Toast.makeText(SignInActivity.this, "사용자님 반갑습니다^^", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(SignInActivity.this, "신규 사용자님 반갑습니다^^", Toast.LENGTH_SHORT).show();
                                 makeUsersTable();
                             }
                         } else {

@@ -41,16 +41,18 @@ public class BoardDescActivity extends AppCompatActivity {
          name = (TextView)findViewById(R.id.name);
          content = (TextView)findViewById(R.id.content);
 
-//        Glide
-//                .with(this)
-//                .load(Uri.parse(item.img))
-//                .circleCrop()
-//                .placeholder(R.drawable.logo)
-//                .into(image);
-        sport.setText(item.sports);
-        area.setText(item.area);
+        Glide
+                .with(this)
+                .load(Uri.parse(item.img))
+                .circleCrop()
+                .placeholder(R.drawable.logo)
+                .into(image);
+        sport.setText("종목 : " + item.sports);
+        area.setText("지역 : " + item.area);
         title.setText(item.title);
-        date.setText(item.date);
+        date.setText("날짜 : " + item.date);
         name.setText(item.name);
+        content.setText("내용 : " + item.content);
+
     }
 }

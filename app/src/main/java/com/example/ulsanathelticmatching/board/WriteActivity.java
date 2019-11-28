@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.example.ulsanathelticmatching.R;
 import com.example.ulsanathelticmatching.main.MainActivity;
+import com.google.android.material.button.MaterialButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -23,7 +24,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class WriteActivity extends AppCompatActivity {
-    Button btn_date,btn_save, btn_cancel;
+    Button btn_date, btn_save, btn_cancel;
     TextView tv_date;
     Spinner sp_sports, sp_area;
 

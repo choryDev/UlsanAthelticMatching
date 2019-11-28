@@ -209,12 +209,12 @@ public class SignInActivity extends AppCompatActivity implements GoogleApiClient
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             if(checkNewRegister()){
-                                Toast.makeText(SignInActivity.this, "반갑습니다^^", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(SignInActivity.this, "신규 사용자님 반갑습니다^^", Toast.LENGTH_SHORT).show();
                                     Intent i = new Intent(SignInActivity.this, MainActivity.class);
                                     startActivity(i);
                                     finish();
                             }else{
-                                Toast.makeText(SignInActivity.this, "신규 사용자님 가입 축하드립니다", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(SignInActivity.this, "사용자님 반갑습니다^^", Toast.LENGTH_SHORT).show();
                                 makeUsersTable();
                             }
                         } else {

@@ -86,7 +86,7 @@ public class ChatActivity extends AppCompatActivity {
         }
 
         @Override
-        public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+        public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
             //데이터를 바인딩
             final CustomViewHolder customViewHolder = (CustomViewHolder) holder;
             String destinationUid = null;
@@ -125,7 +125,7 @@ public class ChatActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(view.getContext(), MessageActivity.class);
-                    intent.putExtra("destinationUid", destinationUsers.get(position));
+                    intent.putExtra("destinationUid",destinationUsers.get(position));
 
                     ActivityOptions activityOptions = null;
                     if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {

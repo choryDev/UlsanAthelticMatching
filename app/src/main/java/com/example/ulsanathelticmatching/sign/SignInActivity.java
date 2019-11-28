@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.example.ulsanathelticmatching.main.MainActivity;
 import com.example.ulsanathelticmatching.R;
+import com.example.ulsanathelticmatching.model.UserModel;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -28,6 +29,7 @@ import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
@@ -35,8 +37,14 @@ import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class SignInActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener{
 
@@ -46,6 +54,7 @@ public class SignInActivity extends AppCompatActivity implements GoogleApiClient
     FirebaseUser user;
     LoginButton loginButton;
     CallbackManager callbackManager;
+    final boolean checked = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,6 +105,43 @@ public class SignInActivity extends AppCompatActivity implements GoogleApiClient
             Intent i = new Intent(this, MainActivity.class);
             startActivity(i);
         }
+    }
+
+        private boolean checkNewRegister(){ //신규인지 확인하는 함수
+        final String myUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        final boolean[] checked1 = {false};
+        FirebaseDatabase.getInstance().getReference().child("users").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    UserModel userModel = snapshot.getValue(UserModel.class);
+                    if (userModel.uid.equals(myUid)) {
+                        checked1[0] = true;
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+        return checked1[0];
+    }
+
+    public void makeUsersTable(){
+        UserModel userModel = new UserModel();
+        String uid = mAuth.getCurrentUser().getUid();
+        userModel.uid = uid;
+        userModel.profileImageUrl = String.valueOf(mAuth.getCurrentUser().getPhotoUrl());
+        userModel.userName = mAuth.getCurrentUser().getDisplayName();
+        FirebaseDatabase.getInstance().getReference().child("users").child(uid).setValue(userModel).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Intent i = new Intent(SignInActivity.this, MainActivity.class);
+                startActivity(i);
+                finish();
+            }
+        });
     }
 
     public void buttonclickLoginFb(View v){
@@ -162,10 +208,15 @@ public class SignInActivity extends AppCompatActivity implements GoogleApiClient
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            Toast.makeText(SignInActivity.this, "아이디 생성이 완료 되었습니다", Toast.LENGTH_SHORT).show();
-                            Intent i = new Intent(SignInActivity.this, MainActivity.class);
-                            startActivity(i);
-                            finish();
+                            if(checkNewRegister()){
+                                Toast.makeText(SignInActivity.this, "반갑습니다^^", Toast.LENGTH_SHORT).show();
+                                    Intent i = new Intent(SignInActivity.this, MainActivity.class);
+                                    startActivity(i);
+                                    finish();
+                            }else{
+                                Toast.makeText(SignInActivity.this, "신규 사용자님 가입 축하드립니다", Toast.LENGTH_SHORT).show();
+                                makeUsersTable();
+                            }
                         } else {
                             Toast.makeText(SignInActivity.this, "구글 로그인 실패 되었습니다", Toast.LENGTH_SHORT).show();
                         }

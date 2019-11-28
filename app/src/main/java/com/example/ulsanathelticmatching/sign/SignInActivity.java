@@ -7,11 +7,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.ulsanathelticmatching.main.MainActivity;
-import com.example.ulsanathelticmatching.main.SelectSportsActivity;
 import com.example.ulsanathelticmatching.R;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
@@ -64,7 +62,7 @@ public class SignInActivity extends AppCompatActivity implements GoogleApiClient
             callbackManager = CallbackManager.Factory.create();
             loginButton.setReadPermissions(Arrays.asList("email"));
         }else{
-            Intent myintent = new Intent(SignInActivity.this, SelectSportsActivity.class);
+            Intent myintent = new Intent(SignInActivity.this, MainActivity.class);
             startActivity(myintent);
         }
 

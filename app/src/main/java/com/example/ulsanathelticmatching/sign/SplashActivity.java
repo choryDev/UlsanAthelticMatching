@@ -44,7 +44,6 @@ public class SplashActivity extends AppCompatActivity {
                             //인터넷 연결 됨
                             mFirebaseRemoteConfig.activateFetched();
                         } else {
-
                         }
                         displayMessage();
                     }

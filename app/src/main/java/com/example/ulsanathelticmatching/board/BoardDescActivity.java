@@ -29,7 +29,7 @@ public class BoardDescActivity extends AppCompatActivity {
 
     private BoardItem item;
     private List<BoardItem> boardItemslist = null;
-    private TextView sport, area, title, date, name, content,auid;
+    private TextView sport, area, title, date, name, content;
     private ImageView image;
 
     private Button chatBtn;
@@ -52,8 +52,6 @@ public class BoardDescActivity extends AppCompatActivity {
 
          chatBtn = (Button)findViewById(R.id.btn_chat);
 
-         auid  = (TextView)findViewById(R.id.uid);
-
         Glide
                 .with(this)
                 .load(Uri.parse(item.img))
@@ -66,7 +64,6 @@ public class BoardDescActivity extends AppCompatActivity {
         date.setText(item.date);
         name.setText(item.name);
         content.setText(item.content);
-        auid.setText(item.uid);
 
         chatBtn.setOnClickListener(new View.OnClickListener() {
             @Override

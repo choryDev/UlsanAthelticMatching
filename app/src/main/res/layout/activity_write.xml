@@ -6,7 +6,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
-
+    android:focusable="true"
+    android:focusableInTouchMode="true"
     tools:context=".board.WriteActivity"
     android:padding="16dp">
 
@@ -22,7 +23,7 @@
             android:layout_marginRight="8dp"
             android:text="날짜 선택" />
 
-        <TextViewactivity_main_drawer
+        <TextView
             android:id="@+id/tv_date"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

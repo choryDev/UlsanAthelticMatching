@@ -1,21 +1,18 @@
 package com.example.ulsanathelticmatching.board;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.ulsanathelticmatching.R;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+import com.example.ulsanathelticmatching.chat.Message2Activity;
 
 import java.util.List;
 
@@ -23,8 +20,9 @@ public class BoardDescActivity extends AppCompatActivity {
 
     private BoardItem item;
     private List<BoardItem> boardItemslist = null;
-    private TextView sport, area, title, date, name, content;
+    private TextView sport, area, title, date, name, content,auid;
     private ImageView image;
+    private Button chatBtn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,6 +38,11 @@ public class BoardDescActivity extends AppCompatActivity {
          date = (TextView)findViewById(R.id.date);
          name = (TextView)findViewById(R.id.name);
          content = (TextView)findViewById(R.id.content);
+         chatBtn = (Button)findViewById(R.id.btn_chat);
+
+         auid  = (TextView)findViewById(R.id.uid);
+
+
 
         Glide
                 .with(this)
@@ -47,12 +50,21 @@ public class BoardDescActivity extends AppCompatActivity {
                 .circleCrop()
                 .placeholder(R.drawable.logo)
                 .into(image);
-        sport.setText("종목 : " + item.sports);
-        area.setText("지역 : " + item.area);
+        sport.setText(item.sports);
+        area.setText(item.area);
         title.setText(item.title);
-        date.setText("날짜 : " + item.date);
+        date.setText(item.date);
         name.setText(item.name);
-        content.setText("내용 : " + item.content);
+        content.setText(item.content);
+        auid.setText(item.uid);
 
+        chatBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), Message2Activity.class);
+                intent.putExtra("destinationUid",item.uid);  //글 작성자 uid 받아오기
+                startActivity(intent);
+            }
+        });
     }
 }

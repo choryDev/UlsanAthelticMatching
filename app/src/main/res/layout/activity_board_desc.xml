@@ -29,9 +29,9 @@
             android:textColor="#ffffff"/>
 
         <Button
-            android:id="@+id/sendMessageBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:id="@+id/btn_chat"
             android:layout_gravity="center"
             android:background="#ffffff"
             android:text="대화걸기"
@@ -45,6 +45,7 @@
         android:layout_weight="1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_margin="10dp"
         android:orientation="vertical">
         <ImageView
             android:layout_margin="8dp"
@@ -65,44 +66,103 @@
             android:layout_height="match_parent"
             android:orientation="horizontal">
             <LinearLayout
+                android:gravity="center_vertical"
                 android:orientation="vertical"
                 android:layout_weight="1"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
+                <LinearLayout
+                    android:layout_margin="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                <TextView
+                    android:textSize="18dp"
+                    android:textStyle="bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:text="종목" />
                 <TextView
                     android:textSize="16dp"
                     android:id="@+id/sports"
+                    android:layout_marginLeft="10dp"
                     android:layout_width="wrap_content"
                     android:layout_height="20dp"
                     android:layout_marginBottom="8dp"
                     android:text="스포츠" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_margin="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                <TextView
+                    android:textSize="18dp"
+                    android:textStyle="bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:text="날짜" />
                 <TextView
                     android:textSize="16dp"
                     android:id="@+id/date"
+                    android:layout_marginLeft="10dp"
                     android:layout_width="wrap_content"
                     android:layout_height="20dp"
                     android:layout_marginBottom="8dp"
                     android:text="스포츠" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_margin="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                <TextView
+                    android:textSize="18dp"
+                    android:textStyle="bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:text="지역" />
                 <TextView
                     android:textSize="16dp"
                     android:id="@+id/area"
+                    android:layout_marginLeft="10dp"
                     android:layout_width="wrap_content"
                     android:layout_height="20dp"
                     android:layout_marginBottom="8dp"
                     android:text="스포츠" />
+                </LinearLayout>
             </LinearLayout>
             <LinearLayout
+                android:background="#BBBBBB"
+                android:layout_width="1dp"
+                android:layout_height="match_parent"/>
+            <LinearLayout
+                android:gravity="center_vertical"
+                android:layout_margin="10dp"
                 android:paddingLeft="16dp"
                 android:orientation="vertical"
                 android:layout_weight="1"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
                 <TextView
+                    android:textSize="18dp"
+                    android:textStyle="bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:text="내용" />
+                <TextView
+                    android:layout_margin="10dp"
                     android:textSize="16dp"
                     android:id="@+id/content"
                     android:layout_width="wrap_content"
                     android:layout_height="20dp"
                     android:text="스포츠" />
+                <TextView
+                    android:textSize="16dp"
+                    android:id="@+id/uid"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:text="uid" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

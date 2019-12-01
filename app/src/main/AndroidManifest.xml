@@ -15,14 +15,16 @@
         <activity android:name=".map.GymWebActivity"></activity>
         <activity android:name=".map.GymDescActivity" />
         <activity android:name=".alarm.AlarmActivity" />
+        <!--android:theme="@style/AppTheme">-->
+        <activity android:name=".chat.Message2Activity"></activity>
         <activity android:name=".map.MapActivity" />
         <activity android:name=".board.BoardDescActivity" />
+        <activity android:name=".board.WriteActivity" />
         <activity
             android:name=".main.MainActivity"
             android:label="@string/title_activity_main"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".sign.SignInActivity" />
-        <activity android:name=".board.WriteActivity" />
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"

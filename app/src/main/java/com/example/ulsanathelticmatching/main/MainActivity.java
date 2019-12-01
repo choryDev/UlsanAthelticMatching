@@ -8,10 +8,10 @@ import com.example.ulsanathelticmatching.R;
 import com.example.ulsanathelticmatching.alarm.AlarmActivity;
 import com.example.ulsanathelticmatching.board.BoardAdapters;
 import com.example.ulsanathelticmatching.board.BoardDescActivity;
-import com.example.ulsanathelticmatching.board.BoardItem;
 import com.example.ulsanathelticmatching.board.WriteActivity;
-import com.example.ulsanathelticmatching.chat.ChatActivity;
+import com.example.ulsanathelticmatching.chat.Message2Activity;
 import com.example.ulsanathelticmatching.map.MapActivity;
+//import com.example.ulsanathelticmatching.chat.ChatActivity;
 import com.example.ulsanathelticmatching.sign.SignInActivity;
 import com.facebook.login.LoginManager;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -28,6 +28,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
@@ -39,7 +40,9 @@ import android.widget.TextView;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -101,7 +104,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 .placeholder(R.drawable.logo)
                 .into(authAvatar);
 
-       Log.d("애러 내용", String.valueOf(mAuth.getCurrentUser().getPhotoUrl()));
+       Log.d("에러 내용", String.valueOf(mAuth.getCurrentUser().getPhotoUrl()));
+
+        passPushTokenToServer();
+
     }
 
     @Override
@@ -120,16 +126,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_home) {
+        if (id == R.id.nav_chat) {
+            Intent i = new Intent(this, Message2Activity.class);
+            startActivity(i);
+        } else if (id == R.id.nav_write) {
             Intent i = new Intent(this, WriteActivity.class);
             startActivity(i);
-        } else if (id == R.id.nav_gallery) {
-            Intent i = new Intent(this, ChatActivity.class);
-            startActivity(i);
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.nav_gym) {
             Intent i = new Intent(this, MapActivity.class);
             startActivity(i);
-        } else if (id == R.id.nav_tools) {
+        } else if (id == R.id.nav_alarm) {
             Intent i = new Intent(this, AlarmActivity.class);
             startActivity(i);
         }else if (id == R.id.nav_send) {
@@ -143,5 +149,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    //푸시알람
+    void passPushTokenToServer(){
+        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid(); //uid 담기
+        String token = FirebaseInstanceId.getInstance().getToken(); //토큰 만들기
+
+        Map<String,Object> map = new HashMap<>();
+        map.put("pushToken",token);
+
+        FirebaseDatabase.getInstance().getReference().child("users").child(uid).updateChildren(map);
+
+
+
     }
 }

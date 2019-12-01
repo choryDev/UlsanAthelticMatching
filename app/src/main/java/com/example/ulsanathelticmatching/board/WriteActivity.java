@@ -14,8 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.ulsanathelticmatching.R;
-import com.example.ulsanathelticmatching.main.MainActivity;
-import com.google.android.material.button.MaterialButton;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -55,7 +54,7 @@ public class WriteActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
 
-        //다이얼로그
+        //데이트 피커 객체를 불러오는 함수
         btn_date.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -74,7 +73,7 @@ public class WriteActivity extends AppCompatActivity {
                 datePickerDialog.show();
             }
         });
-
+        //저장 버튼을 눌러 저장하는 함수
         btn_save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -83,11 +82,12 @@ public class WriteActivity extends AppCompatActivity {
                 String date = tv_date.getText().toString();
                 String content = edt_content.getText().toString();
 
+                //만약 값이 없을 경우 리턴시킨다
                 if(title == "" ||date == "" || content == ""  ){
                     Toast.makeText(getApplicationContext(), "제목 날짜 내용 기입해주세요", Toast.LENGTH_SHORT).show();
                     return;
                 }
-
+                //pk로 저장된 시간을 이용
                 SimpleDateFormat pkformat = new SimpleDateFormat ( "yyyyMMddHHmmss");
                 Date time = new Date();
 
@@ -102,11 +102,15 @@ public class WriteActivity extends AppCompatActivity {
                 item.sports = sp_sports.getSelectedItem().toString();
                 item.area = sp_area.getSelectedItem().toString();
 
-                FirebaseDatabase.getInstance().getReference().child("BoardItem").child(pkformat.format(time)).setValue(item);
-
-                Intent i = new Intent(getApplicationContext(), MainActivity.class);
-                startActivity(i);
-                finish();
+                //firebaseDatabase객체에 BoardItem에 객체를 저장
+                FirebaseDatabase.getInstance().getReference().child("BoardItem").child(pkformat.format(time)).setValue(item)
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Toast.makeText(getApplicationContext(), "경기가 등록 되었습니다", Toast.LENGTH_SHORT).show();
+                        finish();
+                    }
+                });
             }
         });
     }

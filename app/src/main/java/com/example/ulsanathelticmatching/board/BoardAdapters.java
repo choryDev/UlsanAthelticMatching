@@ -9,9 +9,16 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+
 import com.bumptech.glide.Glide;
 import com.example.ulsanathelticmatching.R;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class BoardAdapters extends BaseAdapter {
@@ -20,14 +27,29 @@ public class BoardAdapters extends BaseAdapter {
     private List<BoardItem> boardItemslist = null;
     private LayoutInflater inflater = null;
 
-    public BoardAdapters(Context c, int l, List<BoardItem> boardItemslist) {
+    public BoardAdapters(Context c, int l) {
 
-        this.boardItemslist = boardItemslist;
+        boardItemslist = new ArrayList<>();
+        FirebaseDatabase.getInstance().getReference().child("BoardItem").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                boardItemslist.clear();
+                for (DataSnapshot item : dataSnapshot.getChildren()) {
+                    BoardItem boardItem = item.getValue(BoardItem.class);
+                    boardItemslist.add(boardItem);
+                }
+                notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
         this.mContext = c;
         this.layout = l;
         this.inflater = (LayoutInflater) c.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
-        notifyDataSetChanged();
     }
 
     @Override
@@ -37,9 +59,9 @@ public class BoardAdapters extends BaseAdapter {
     }
 
     @Override
-    public Object getItem(int position) {
+    public BoardItem getItem(int position) {
         // TODO Auto-generated method stub
-        return boardItemslist;
+        return boardItemslist.get(position);
     }
 
     @Override

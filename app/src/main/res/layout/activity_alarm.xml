@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".alarm.AlarmActivity">
+
+    <LinearLayout
+        android:layout_weight="2"
+        android:background="@drawable/side_nav_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingLeft="48dp"
+        android:paddingTop="64dp">
+
+        <TextView
+            android:textStyle="bold"
+            android:textColor="#ffffff"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="알람 설정입니다"
+            android:textSize="40sp"
+            android:layout_marginBottom="24dp"/>
+        <TextView
+            android:textColor="#ffffff"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="혹시 매칭이 잡히셨다면 알람을 맞춰봐요!"
+            android:textSize="14sp"
+            android:layout_marginBottom="40dp"/>
+        <ImageView
+            android:src="@drawable/alarm_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center">
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/button_timepicker"
+            android:layout_centerHorizontal="true"
+            android:text="알람이 지정되지 않았습니다."
+            android:textSize="16sp"
+            android:layout_marginBottom="32dp"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <Button
+                android:id="@+id/button_timepicker"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:text="알람 생성하기"
+                android:layout_marginRight="16dp"/>
+
+            <Button
+                android:id="@+id/button_cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/button_timepicker"
+                android:layout_centerHorizontal="true"
+                android:text="알람 취소하기" />
+        </LinearLayout>
+    </LinearLayout>
+
+
+
+
+</LinearLayout>

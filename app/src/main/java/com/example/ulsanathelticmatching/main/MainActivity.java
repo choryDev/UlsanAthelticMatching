@@ -9,6 +9,7 @@ import com.example.ulsanathelticmatching.alarm.AlarmActivity;
 import com.example.ulsanathelticmatching.board.BoardAdapters;
 import com.example.ulsanathelticmatching.board.BoardDescActivity;
 import com.example.ulsanathelticmatching.board.WriteActivity;
+import com.example.ulsanathelticmatching.chat.ChatActivity;
 import com.example.ulsanathelticmatching.chat.Message2Activity;
 import com.example.ulsanathelticmatching.map.MapActivity;
 //import com.example.ulsanathelticmatching.chat.ChatActivity;
@@ -127,7 +128,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         int id = item.getItemId();
 
         if (id == R.id.nav_chat) {
-            Intent i = new Intent(this, Message2Activity.class);
+            Intent i = new Intent(this, ChatActivity.class);
             startActivity(i);
         } else if (id == R.id.nav_write) {
             Intent i = new Intent(this, WriteActivity.class);
@@ -159,9 +160,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Map<String,Object> map = new HashMap<>();
         map.put("pushToken",token);
 
+        //DB에 토큰넣기
         FirebaseDatabase.getInstance().getReference().child("users").child(uid).updateChildren(map);
-
-
 
     }
 }

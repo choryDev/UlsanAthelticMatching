@@ -157,12 +157,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="20dp"
                     android:text="스포츠" />
-                <TextView
-                    android:textSize="16dp"
-                    android:id="@+id/uid"
-                    android:layout_width="wrap_content"
-                    android:layout_height="20dp"
-                    android:text="uid" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

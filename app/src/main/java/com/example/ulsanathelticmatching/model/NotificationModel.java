@@ -7,5 +7,6 @@ public class NotificationModel {
     public class Notification {
         public String title;
         public String uid;
+        public String text;
     }
 }

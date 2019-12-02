@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,16 +20,35 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.ulsanathelticmatching.R;
 import com.example.ulsanathelticmatching.model.ChatModel;
+import com.example.ulsanathelticmatching.model.NotificationModel;
 import com.example.ulsanathelticmatching.model.UserModel;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
+import com.google.gson.Gson;
 
+import org.jetbrains.annotations.NotNull;
+
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 public class Message2Activity extends AppCompatActivity {
     private String destinationUid;
@@ -40,6 +60,9 @@ public class Message2Activity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
 
+    private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy.MM.dd HH:mm");
+
+    private UserModel destinationuserModel;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,11 +94,50 @@ public class Message2Activity extends AppCompatActivity {
                     ChatModel.Comment comment = new ChatModel.Comment();
                     comment.uid = uid;
                     comment.message = editText.getText().toString();
-                    FirebaseDatabase.getInstance().getReference().child("chatrooms").child(chatRoomUid).child("comments").push().setValue(comment);
+                    comment.timestamp = ServerValue.TIMESTAMP; //1970/1/1 시간을 뺀 밀리세컨즈값
+                    FirebaseDatabase.getInstance().getReference().child("chatrooms").child(chatRoomUid).child("comments").push().setValue(comment).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            sendGcm();
+                            editText.setText("");  //에디트 텍스트 초기화
+
+                        }
+                    });
                 }
             }
         });
         checkChatRoom();
+    }
+    //푸시
+    void sendGcm(){
+        Gson gson = new Gson();
+
+        String userName ="gg";
+        NotificationModel notificationModel = new NotificationModel();
+        notificationModel.to = destinationuserModel.pushToken;
+        notificationModel.notification.title = "송신자";
+        notificationModel.notification.text = editText.getText().toString();
+
+        RequestBody requestBody = RequestBody.create(gson.toJson(notificationModel), MediaType.parse("application/json; charset=utf8"));
+        Request request = new Request.Builder()
+                .header("Content-Type","application/json")
+                .addHeader("Authorization","key=AAAAI_qLyCQ:APA91bFa8Ilp_4-nW7Bcr4cJqUfxUTrakNR5UpfNzm_QFXPJYpIiVqnzIx035ss4cy2HFtZ_3OpkWxkRXy-UJ-VBdgUvYwOzWD3woIWMWTEOxU2oL1lGPaQNvMKWkquxn931DU94zvHl")
+                .url("https://fcm.googleapis.com/fcm/send")
+                .post(requestBody)
+                .build();
+        OkHttpClient okHttpClient = new OkHttpClient();
+        okHttpClient.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+
+            }
+        });
+
     }
 
     void checkChatRoom() {
@@ -107,6 +169,7 @@ public class Message2Activity extends AppCompatActivity {
         List<ChatModel.Comment> comments;
 
         UserModel userModel;
+
         public RecycleViewAdapter() {
             comments = new ArrayList<>();
 
@@ -127,8 +190,9 @@ public class Message2Activity extends AppCompatActivity {
 
 
         }
+
         //message리스트 받아옴
-        void getMessageList(){
+        void getMessageList() {
             FirebaseDatabase.getInstance().getReference().child("chatrooms").child(chatRoomUid).child("comments").addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -137,8 +201,9 @@ public class Message2Activity extends AppCompatActivity {
                     for (DataSnapshot item : dataSnapshot.getChildren()) {
                         comments.add(item.getValue(ChatModel.Comment.class));
                     }
-                    notifyDataSetChanged();
+                    notifyDataSetChanged(); //메세지 갱신
 
+                    recyclerView.scrollToPosition(comments.size() - 1); //맨 마지막 포지션으로 이동
                 }
 
                 @Override
@@ -160,14 +225,15 @@ public class Message2Activity extends AppCompatActivity {
         public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
             MessageViewHolder messageViewHolder = ((MessageViewHolder) holder);
 
-            if(comments.get(position).uid.equals(uid)) {
+            if (comments.get(position).uid.equals(uid)) {
                 //내가 말하는 부분
                 messageViewHolder.textView_message.setText(comments.get(position).message);
                 messageViewHolder.textView_message.setBackgroundResource(R.drawable.rightbubble);
                 messageViewHolder.linearLayout_destination.setVisibility(View.INVISIBLE); //내 프로필 감춤
-                messageViewHolder.textView_message.setTextSize(23);
-
-            }else{
+                messageViewHolder.textView_message.setTextSize(20);
+                messageViewHolder.linearLayout_main.setGravity(Gravity.RIGHT);
+            } else {
+                //상대방 메세지
                 Glide.with(holder.itemView.getContext())
                         .load(userModel.profileImageUrl)
                         .apply(new RequestOptions().circleCrop())
@@ -176,8 +242,17 @@ public class Message2Activity extends AppCompatActivity {
                 messageViewHolder.linearLayout_destination.setVisibility(View.VISIBLE);
                 messageViewHolder.textView_message.setBackgroundResource(R.drawable.leftbubble);
                 messageViewHolder.textView_message.setText(comments.get(position).message);
-                messageViewHolder.textView_message.setTextSize(23);
+                messageViewHolder.textView_message.setTextSize(20);
+                messageViewHolder.linearLayout_main.setGravity(Gravity.LEFT);
             }
+
+            //시간정제화
+            long unixTime = (long)comments.get(position).timestamp;
+            Date date = new Date(unixTime); //comments에서 가져온 시간을 담음
+            simpleDateFormat.setTimeZone(TimeZone.getTimeZone("Asia/Seoul")); //서울시간에 맞게 데이터포맷을 바꿈
+            String time = simpleDateFormat.format(date); //바꾼 시간포맷을 스트림에 담음
+            messageViewHolder.textView_timestamp.setText(time); //타임스템프에 담음
+
         }
 
         @Override
@@ -190,15 +265,18 @@ public class Message2Activity extends AppCompatActivity {
             public TextView textView_name;
             public ImageView imageView_profile;
             public LinearLayout linearLayout_destination;
+            public LinearLayout linearLayout_main;
+            public TextView textView_timestamp;
 
 
             public MessageViewHolder(View view) {
                 super(view);
                 textView_message = (TextView) view.findViewById(R.id.messageItem_textView_message);
                 textView_name = (TextView) view.findViewById(R.id.messageItem_textview_name);
-                imageView_profile = (ImageView)view.findViewById(R.id.messageItem_imageview_profile);
-                linearLayout_destination = (LinearLayout)view.findViewById(R.id.messageItem_linearlayout_destination);
-
+                imageView_profile = (ImageView) view.findViewById(R.id.messageItem_imageview_profile);
+                linearLayout_destination = (LinearLayout) view.findViewById(R.id.messageItem_linearlayout_destination);
+                linearLayout_main = (LinearLayout) view.findViewById(R.id.messageItem_linearlayout_main);
+                textView_timestamp = (TextView) view.findViewById(R.id.messageItem_textView_timestamp);
 
 
             }

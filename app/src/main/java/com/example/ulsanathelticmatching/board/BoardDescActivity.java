@@ -52,7 +52,6 @@ public class BoardDescActivity extends AppCompatActivity {
 
          chatBtn = (Button)findViewById(R.id.btn_chat);
 
-         auid  = (TextView)findViewById(R.id.uid);
 
         Glide
                 .with(this)
@@ -66,7 +65,6 @@ public class BoardDescActivity extends AppCompatActivity {
         date.setText(item.date);
         name.setText(item.name);
         content.setText(item.content);
-        auid.setText(item.uid);
 
         chatBtn.setOnClickListener(new View.OnClickListener() {
             @Override

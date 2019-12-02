@@ -12,11 +12,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".map.GymWebActivity"></activity>
+        <activity android:name=".chat.ChatActivity"></activity>
+        <activity android:name=".map.GymWebActivity" />
         <activity android:name=".map.GymDescActivity" />
-        <activity android:name=".alarm.AlarmActivity" />
-        <!--android:theme="@style/AppTheme">-->
-        <activity android:name=".chat.Message2Activity"></activity>
+        <activity android:name=".alarm.AlarmActivity" /> <!-- android:theme="@style/AppTheme"> -->
+        <activity android:name=".chat.Message2Activity" />
         <activity android:name=".map.MapActivity" />
         <activity android:name=".board.BoardDescActivity" />
         <activity android:name=".board.WriteActivity" />

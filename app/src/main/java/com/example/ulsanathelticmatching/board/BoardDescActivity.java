@@ -29,7 +29,7 @@ public class BoardDescActivity extends AppCompatActivity {
 
     private BoardItem item;
     private List<BoardItem> boardItemslist = null;
-    private TextView sport, area, title, date, name, content,auid;
+    private TextView sport, area, title, date, name, content;
     private ImageView image;
 
     private Button chatBtn;
@@ -52,7 +52,10 @@ public class BoardDescActivity extends AppCompatActivity {
 
          chatBtn = (Button)findViewById(R.id.btn_chat);
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> d1c1fd15919aaeaf26da49350c9131acfd42cc10
         Glide
                 .with(this)
                 .load(Uri.parse(item.img))

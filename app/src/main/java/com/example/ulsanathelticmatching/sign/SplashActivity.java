@@ -55,7 +55,9 @@ public class SplashActivity extends AppCompatActivity {
         boolean caps = mFirebaseRemoteConfig.getBoolean("splash_message_caps");
         String splash_message = mFirebaseRemoteConfig.getString("splash_message");
 
-        linearLayout.setBackgroundColor(Color.parseColor(splash_background));
+        linearLayout.setBackgroundColor(Color.rgb(203,224,226));
+
+//        linearLayout.setBackgroundColor(Color.parseColor(splash_background));
 
         if(caps){
             AlertDialog.Builder builder = new AlertDialog.Builder(this);

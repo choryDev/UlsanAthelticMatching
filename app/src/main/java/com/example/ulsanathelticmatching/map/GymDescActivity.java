@@ -17,6 +17,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.ulsanathelticmatching.R;
@@ -37,6 +38,8 @@ public class GymDescActivity extends AppCompatActivity implements OnMapReadyCall
     private double longitude; //위도
     private double latitude; //경도
     private final String pathmethod[] = {"CAR", "PUBLICTRANSIT", "FOOT"};
+    private TextView tv_name, tv_locationName, tv_typeClassification, tv_weekEndTime,
+                    tv_address, tv_closedDay, tv_starttime, tv_endtime, tv_weekStartTime;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,8 +56,29 @@ public class GymDescActivity extends AppCompatActivity implements OnMapReadyCall
         webSieteBtn = (Button)findViewById(R.id.webSieteBtn);
         mapBtn = (Button)findViewById(R.id.mapBtn);
 
+        //////////////////////인텐트로 받아온 체육관 정보 텍스트 뷰 연결
         Intent intent = getIntent(); //인텐트로 체육관 정보를 받아 옴
         item  = (GymModel)intent.getSerializableExtra("OBJECT");
+
+        tv_name = (TextView) findViewById(R.id.tv_name);
+        tv_locationName = (TextView) findViewById(R.id.tv_locationName);
+        tv_typeClassification = (TextView) findViewById(R.id.typeClassification);
+        tv_address = (TextView) findViewById(R.id.tv_address);
+        tv_closedDay = (TextView) findViewById(R.id.tv_closeDay);
+        tv_starttime = (TextView) findViewById(R.id.tv_starttime);
+        tv_endtime = (TextView) findViewById(R.id.tv_endtime);
+        tv_weekEndTime = (TextView) findViewById(R.id.tv_weekEndTime);
+        tv_weekStartTime = (TextView) findViewById(R.id.tv_weekStartTime);
+
+        tv_name.setText(item.name);
+        tv_locationName.setText(item.locationName);
+        tv_typeClassification.setText(item.typeClassification);
+        tv_address.setText(item.address);
+        tv_closedDay.setText(item.closedDay);
+        tv_starttime.setText(item.starttime);
+        tv_endtime.setText(item.endtime);
+        tv_weekEndTime.setText(item.weekEndTime);
+        tv_weekStartTime.setText(item.weekStartTime);
 
         webSieteBtn.setOnClickListener(new View.OnClickListener() {
             @Override //해당 체육관 정보 알려주는 웹 사이트 보여 준다.

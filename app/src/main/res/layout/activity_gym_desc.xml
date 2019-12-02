@@ -23,29 +23,58 @@
             android:textSize="24dp"
             android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/tv_locationName"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="13dp"
-            android:text="개방시설명"
-            android:textSize="16dp" />
+            android:layout_marginBottom="13dp">
+            <TextView
+                android:textStyle="bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="개방 시설명 : "
+                android:textSize="18dp" />
+            <TextView
+                android:id="@+id/tv_locationName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="개방시설명"
+                android:textSize="16dp" />
+        </LinearLayout>
 
-        <TextView
-            android:id="@+id/typeClassification"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="13dp"
-            android:text="개방 시설 유형 구분"
-            android:textSize="12dp" />
+            android:layout_marginBottom="13dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="개방 시설 유형 구분 : "
+                android:textStyle="bold"
+                android:textSize="14dp" />
+            <TextView
+                android:id="@+id/typeClassification"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="개방 시설 유형 구분"
+                android:textSize="12dp" />
+        </LinearLayout>
 
-        <TextView
-            android:id="@+id/tv_address"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="13dp"
-            android:text="주소"
-            android:textSize="12dp" />
+            android:layout_marginBottom="13dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="주소 : "
+                android:textSize="14dp" />
+            <TextView
+                android:id="@+id/tv_address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="주소"
+                android:textSize="12dp" />
+        </LinearLayout>
     </LinearLayout>
     <TextView
         android:text="운영시간"

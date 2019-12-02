@@ -60,7 +60,7 @@ public class ChatActivity extends AppCompatActivity {
             uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
             //내가 소속된 방 들어감
-            FirebaseDatabase.getInstance().getReference().child("chatrooms").orderByChild("users/" + uid).addListenerForSingleValueEvent(new ValueEventListener() {
+            FirebaseDatabase.getInstance().getReference().child("chatrooms").orderByChild("users/" + uid).equalTo(true).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     chatModels.clear();

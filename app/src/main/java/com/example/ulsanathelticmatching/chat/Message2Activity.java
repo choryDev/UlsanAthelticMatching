@@ -112,11 +112,13 @@ public class Message2Activity extends AppCompatActivity {
     void sendGcm(){
         Gson gson = new Gson();
 
-        String userName ="gg";
+        String userName = FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
         NotificationModel notificationModel = new NotificationModel();
         notificationModel.to = destinationuserModel.pushToken;
-        notificationModel.notification.title = "송신자";
+        notificationModel.notification.title = userName;
         notificationModel.notification.text = editText.getText().toString();
+        notificationModel.data.title = userName;  //푸시받을때 데이터 파싱
+        notificationModel.data.text = editText.getText().toString();
 
         RequestBody requestBody = RequestBody.create(gson.toJson(notificationModel), MediaType.parse("application/json; charset=utf8"));
         Request request = new Request.Builder()
@@ -129,12 +131,12 @@ public class Message2Activity extends AppCompatActivity {
         okHttpClient.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
-
+ //실패시
             }
 
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-
+//성공시
             }
         });
 

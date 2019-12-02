@@ -198,9 +198,6 @@ public class Message2Activity extends AppCompatActivity {
                 textView_name = (TextView) view.findViewById(R.id.messageItem_textview_name);
                 imageView_profile = (ImageView)view.findViewById(R.id.messageItem_imageview_profile);
                 linearLayout_destination = (LinearLayout)view.findViewById(R.id.messageItem_linearlayout_destination);
-
-
-
             }
         }
     }

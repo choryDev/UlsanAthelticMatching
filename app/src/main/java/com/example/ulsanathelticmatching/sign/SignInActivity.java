@@ -37,10 +37,12 @@ import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.kakao.usermgmt.response.model.User;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -134,6 +136,7 @@ public class SignInActivity extends AppCompatActivity implements GoogleApiClient
         userModel.uid = uid;
         userModel.profileImageUrl = String.valueOf(mAuth.getCurrentUser().getPhotoUrl());
         userModel.userName = mAuth.getCurrentUser().getDisplayName();
+
         FirebaseDatabase.getInstance().getReference().child("users").child(uid).setValue(userModel).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
@@ -171,11 +174,19 @@ public class SignInActivity extends AppCompatActivity implements GoogleApiClient
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
                             if(checkNewRegister()){
+                                //Auth에 이름 넣기
+                                UserProfileChangeRequest userProfileChangeRequest = new UserProfileChangeRequest.Builder().setDisplayName(mAuth.getCurrentUser().getDisplayName()).build();
+                                task.getResult().getUser().updateProfile(userProfileChangeRequest);
+
                                 Toast.makeText(SignInActivity.this, "사용자님 반갑습니다^^", Toast.LENGTH_SHORT).show();
                                 Intent i = new Intent(SignInActivity.this, MainActivity.class);
                                 startActivity(i);
                                 finish();
                             }else{
+                                //Auth에 이름 넣기
+                                UserProfileChangeRequest userProfileChangeRequest = new UserProfileChangeRequest.Builder().setDisplayName(mAuth.getCurrentUser().getDisplayName()).build();
+                                task.getResult().getUser().updateProfile(userProfileChangeRequest);
+
                                 Toast.makeText(SignInActivity.this, "신규 사용자님 반갑습니다^^", Toast.LENGTH_SHORT).show();
                                 makeUsersTable();
                             }
@@ -214,11 +225,17 @@ public class SignInActivity extends AppCompatActivity implements GoogleApiClient
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             if(checkNewRegister()){
+                                //Auth에 이름 넣기
+                                UserProfileChangeRequest userProfileChangeRequest = new UserProfileChangeRequest.Builder().setDisplayName(mAuth.getCurrentUser().getDisplayName()).build();
+                                task.getResult().getUser().updateProfile(userProfileChangeRequest);
                                 Toast.makeText(SignInActivity.this, "사용자님 반갑습니다^^", Toast.LENGTH_SHORT).show();
                                     Intent i = new Intent(SignInActivity.this, MainActivity.class);
                                     startActivity(i);
                                     finish();
                             }else{
+                                //Auth에 이름 넣기
+                                UserProfileChangeRequest userProfileChangeRequest = new UserProfileChangeRequest.Builder().setDisplayName(mAuth.getCurrentUser().getDisplayName()).build();
+                                task.getResult().getUser().updateProfile(userProfileChangeRequest);
                                 Toast.makeText(SignInActivity.this, "신규 사용자님 반갑습니다^^", Toast.LENGTH_SHORT).show();
                                 makeUsersTable();
                             }

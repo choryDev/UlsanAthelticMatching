@@ -170,17 +170,14 @@ public class Message2Activity extends AppCompatActivity {
         //코멘트를 담음
         List<ChatModel.Comment> comments;
 
-        UserModel userModel;
-
         public RecycleViewAdapter() {
             comments = new ArrayList<>();
 
             FirebaseDatabase.getInstance().getReference().child("users").child(destinationUid).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    userModel = dataSnapshot.getValue(UserModel.class); //유저모델 정보가 담김
+                    destinationuserModel = dataSnapshot.getValue(UserModel.class); //유저모델 정보가 담김
                     getMessageList();
-
 
                 }
 
@@ -189,8 +186,6 @@ public class Message2Activity extends AppCompatActivity {
 
                 }
             });
-
-
         }
 
         //message리스트 받아옴
@@ -237,10 +232,10 @@ public class Message2Activity extends AppCompatActivity {
             } else {
                 //상대방 메세지
                 Glide.with(holder.itemView.getContext())
-                        .load(userModel.profileImageUrl)
+                        .load(destinationuserModel.profileImageUrl)
                         .apply(new RequestOptions().circleCrop())
                         .into(messageViewHolder.imageView_profile);
-                messageViewHolder.textView_name.setText(userModel.userName);
+                messageViewHolder.textView_name.setText(destinationuserModel.userName);
                 messageViewHolder.linearLayout_destination.setVisibility(View.VISIBLE);
                 messageViewHolder.textView_message.setBackgroundResource(R.drawable.leftbubble);
                 messageViewHolder.textView_message.setText(comments.get(position).message);

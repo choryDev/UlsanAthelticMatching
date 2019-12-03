@@ -64,6 +64,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="13dp">
             <TextView
+                android:textStyle="bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="주소 : "

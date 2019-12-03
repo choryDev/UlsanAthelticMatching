@@ -40,6 +40,15 @@ public class BoardAdapters extends BaseAdapter {
                 boardItemslist.clear();
                 for (DataSnapshot item : dataSnapshot.getChildren()) {
                     BoardItem boardItem = item.getValue(BoardItem.class);
+//
+//                    if(){
+//
+//                    }else if(){
+//
+//                    }else if(){
+//
+//                    }
+
                     boardItemslist.add(boardItem);
                 }
                 notifyDataSetChanged();

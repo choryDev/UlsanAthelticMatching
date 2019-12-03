@@ -27,9 +27,13 @@ public class BoardAdapters extends BaseAdapter {
     private List<BoardItem> boardItemslist = null;
     private LayoutInflater inflater = null;
 
-    public BoardAdapters(Context c, int l) {
+    public BoardAdapters(Context c, int l, String sports, String areas) {
 
         boardItemslist = new ArrayList<>();
+
+        if(sports != null && areas !=null){
+
+        }
         FirebaseDatabase.getInstance().getReference().child("BoardItem").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

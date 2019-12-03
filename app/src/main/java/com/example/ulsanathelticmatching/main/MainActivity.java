@@ -31,8 +31,10 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.io.Serializable;
@@ -49,7 +51,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private TextView authEmail;
     private ImageView authAvatar;
 
+    private Spinner sp_sport, sp_area;
+
     BoardAdapters myadapter;
+    ArrayAdapter<CharSequence> spSport, spArea;
+    private String select_sport,select_area;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +67,38 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         listView = (ListView)findViewById(R.id.MainActivity_listview);
 
-        myadapter = new BoardAdapters(getApplicationContext(), R.layout.activity_board_items);
+        final DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        NavigationView navigationView = findViewById(R.id.nav_view);
+
+        sp_sport = (Spinner)findViewById(R.id.spi_sport); //운동 선택 스피너
+        sp_area = (Spinner)findViewById(R.id.spi_area); //지역 선택 스피너
+
+        sp_sport.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+               //선택한 값 가져오기
+                if(i == 0){
+                    select_sport = null;  //만약 모든 운동선택시 null값 넣어줌
+                }else{
+                    select_sport = adapterView.getItemAtPosition(i).toString();
+                }
+            }
+        });
+
+        sp_area.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                //선택한 값 가져오기
+                if(i == 0){
+                    select_area = null;
+                }else{
+                    select_area = adapterView.getItemAtPosition(i).toString();
+                }
+            }
+        });
+
+
+        myadapter = new BoardAdapters(getApplicationContext(), R.layout.activity_board_items,select_area,select_sport);
         listView.setAdapter(myadapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -72,8 +110,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         });
 
-        final DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        NavigationView navigationView = findViewById(R.id.nav_view);
+
         navigationView.setNavigationItemSelectedListener(this);
 
         FloatingActionButton fab = findViewById(R.id.fab);
@@ -151,6 +188,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         String uid = FirebaseAuth.getInstance().getCurrentUser().getUid(); //uid 담기
         String token = FirebaseInstanceId.getInstance().getToken(); //토큰 만들기
 
+        //DB users의 각 값에 'pushToken : 토큰값' 형태로 넣기
         Map<String,Object> map = new HashMap<>();
         map.put("pushToken",token);
 

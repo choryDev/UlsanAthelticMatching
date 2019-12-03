@@ -5,10 +5,29 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal">
+
+        <Spinner
+            android:id="@+id/spi_sport"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:entries="@array/sports_array" />
+
+        <Spinner
+            android:id="@+id/spi_area"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:entries="@array/area_array" />
+    </LinearLayout>
     <android.support.v7.widget.RecyclerView
         android:id="@+id/boardlist"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentStart="true">boardlist
+        android:layout_alignParentStart="true">
     </android.support.v7.widget.RecyclerView>
 </LinearLayout>

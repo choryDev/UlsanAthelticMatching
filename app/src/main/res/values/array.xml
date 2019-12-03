@@ -6,7 +6,22 @@
         <item>야구</item>
         <item>테니스</item>
     </string-array>
+    <string-array name="allSports_array">
+        <item>모든 운동</item>
+        <item>축구</item>
+        <item>농구</item>
+        <item>야구</item>
+        <item>테니스</item>
+    </string-array>
     <string-array name="area_array">
+        <item>남구</item>
+        <item>동구</item>
+        <item>북구</item>
+        <item>울주군</item>
+        <item>중구</item>
+    </string-array>
+    <string-array name="allArea_array">
+        <item>모든 지역</item>
         <item>남구</item>
         <item>동구</item>
         <item>북구</item>

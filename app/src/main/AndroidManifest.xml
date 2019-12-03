@@ -12,10 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-<<<<<<< HEAD
         <activity android:name=".chat.ChatActivity"></activity>
-=======
->>>>>>> d1c1fd15919aaeaf26da49350c9131acfd42cc10
         <activity android:name=".map.GymWebActivity" />
         <activity android:name=".map.GymDescActivity" />
         <activity android:name=".alarm.AlarmActivity" /> <!-- android:theme="@style/AppTheme"> -->

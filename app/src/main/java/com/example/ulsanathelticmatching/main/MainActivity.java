@@ -36,6 +36,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.Serializable;
 import java.util.HashMap;
@@ -73,6 +74,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         sp_sport = (Spinner)findViewById(R.id.spi_sport); //운동 선택 스피너
         sp_area = (Spinner)findViewById(R.id.spi_area); //지역 선택 스피너
 
+<<<<<<< HEAD
 //        sp_sport.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 //            @Override
 //            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -96,7 +98,31 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 //                }
 //            }
 //        });
+=======
+        sp_sport.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                Toast.makeText(getApplicationContext(), "테스트", Toast.LENGTH_SHORT).show();
+            }
 
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+>>>>>>> e32aabf9d9817c21756316f30d2676e883f22a78
+
+        sp_area.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                Toast.makeText(getApplicationContext(), sp_area.getSelectedItem().toString(), Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
 
         myadapter = new BoardAdapters(getApplicationContext(), R.layout.activity_board_items,select_area,select_sport);
         listView.setAdapter(myadapter);

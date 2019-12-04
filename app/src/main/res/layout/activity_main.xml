@@ -12,6 +12,12 @@
 
     <!--안에 내용물-->
     <androidx.coordinatorlayout.widget.CoordinatorLayout
+<<<<<<< HEAD
+=======
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+>>>>>>> e32aabf9d9817c21756316f30d2676e883f22a78
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 

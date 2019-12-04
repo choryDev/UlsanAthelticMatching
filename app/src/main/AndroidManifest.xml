@@ -8,6 +8,8 @@
 
     <application
         android:allowBackup="true"
+        android:hardwareAccelerated="false"
+        android:largeHeap="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
@@ -16,6 +18,7 @@
         android:usesCleartextTraffic="true">
         <activity android:name=".myboard.MyBoardDescActivity"></activity>
         <activity android:name=".myboard.MyBoardActivity" />
+        <!--<activity android:name=".news.NewsActivity"></activity>-->
         <activity android:name=".chat.ChatActivity" />
         <activity android:name=".map.GymWebActivity" />
         <activity android:name=".map.GymDescActivity" />

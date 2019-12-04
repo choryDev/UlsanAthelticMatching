@@ -112,7 +112,7 @@ public class GymDescActivity extends AppCompatActivity implements OnMapReadyCall
         mMap.addMarker(markerOptions); //주소 속성
 
         mMap.moveCamera(CameraUpdateFactory.newLatLng(gymLocation));
-        mMap.animateCamera(CameraUpdateFactory.zoomTo(16)); //처음에 줌 되는 정도
+        mMap.animateCamera(CameraUpdateFactory.zoomTo(10)); //처음에 줌 되는 정도
     }
     public void openKakaoPath(View view)//카카오 길찾기 다이얼로그 호출 함수
     {
@@ -147,4 +147,20 @@ public class GymDescActivity extends AppCompatActivity implements OnMapReadyCall
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
     }
+
+    final LocationListener gpsLocationListener = new LocationListener() {
+        public void onLocationChanged(Location location) {
+            longitude = location.getLongitude();
+            latitude = location.getLatitude();
+        }
+
+        public void onStatusChanged(String provider, int status, Bundle extras) {
+        }
+
+        public void onProviderEnabled(String provider) {
+        }
+
+        public void onProviderDisabled(String provider) {
+        }
+    };
 }

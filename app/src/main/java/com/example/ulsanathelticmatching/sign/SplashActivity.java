@@ -27,7 +27,6 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-
         linearLayout = findViewById(R.id.splashactivity_linaerlayout);
         mFirebaseRemoteConfig = FirebaseRemoteConfig.getInstance();
         FirebaseRemoteConfigSettings configSettings = new FirebaseRemoteConfigSettings.Builder()
@@ -57,8 +56,6 @@ public class SplashActivity extends AppCompatActivity {
 
         linearLayout.setBackgroundColor(Color.rgb(203,224,226));
 
-//        linearLayout.setBackgroundColor(Color.parseColor(splash_background));
-
         if(caps){
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setMessage(splash_message).setPositiveButton("확인", new DialogInterface.OnClickListener() {
@@ -67,7 +64,6 @@ public class SplashActivity extends AppCompatActivity {
                     finish();
                 }
             });
-
             builder.create().show();
         }else{
             startActivity(new Intent(this, SignInActivity.class));

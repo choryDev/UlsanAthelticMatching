@@ -10,7 +10,7 @@
             android:title="채 팅" />
         <item
             android:id="@+id/nav_my"
-            android:icon="@drawable/ic_create_black_24dp"
+            android:icon="@drawable/ic_perm_identity_black_24dp"
             android:title="내 매칭" />
         <item
             android:id="@+id/nav_write"

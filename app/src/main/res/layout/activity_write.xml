@@ -55,14 +55,25 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <EditText
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:hint="제목">
+
+        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edt_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="제 목"
             android:maxLines="1" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <EditText
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:hint="내용">
+        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edt_content"
             android:inputType="textMultiLine"
             android:lines="15"
@@ -71,8 +82,8 @@
             android:layout_height="wrap_content"
             android:layout_width="fill_parent"
             android:scrollbars="vertical"
-            android:hint="내용"
             android:layout_marginBottom="32dp"/>
+        </com.google.android.material.textfield.TextInputLayout>
     </LinearLayout>
 
     <LinearLayout

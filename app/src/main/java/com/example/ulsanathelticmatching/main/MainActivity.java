@@ -73,29 +73,29 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         sp_sport = (Spinner)findViewById(R.id.spi_sport); //운동 선택 스피너
         sp_area = (Spinner)findViewById(R.id.spi_area); //지역 선택 스피너
 
-        sp_sport.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-               //선택한 값 가져오기
-                if(i == 0){
-                    select_sport = null;  //만약 모든 운동선택시 null값 넣어줌
-                }else{
-                    select_sport = adapterView.getItemAtPosition(i).toString();
-                }
-            }
-        });
-
-        sp_area.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                //선택한 값 가져오기
-                if(i == 0){
-                    select_area = null;
-                }else{
-                    select_area = adapterView.getItemAtPosition(i).toString();
-                }
-            }
-        });
+//        sp_sport.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+//               //선택한 값 가져오기
+//                if(i == 0){
+//                    select_sport = null;  //만약 모든 운동선택시 null값 넣어줌
+//                }else{
+//                    select_sport = adapterView.getItemAtPosition(i).toString();
+//                }
+//            }
+//        });
+//
+//        sp_area.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+//                //선택한 값 가져오기
+//                if(i == 0){
+//                    select_area = null;
+//                }else{
+//                    select_area = adapterView.getItemAtPosition(i).toString();
+//                }
+//            }
+//        });
 
 
         myadapter = new BoardAdapters(getApplicationContext(), R.layout.activity_board_items,select_area,select_sport);

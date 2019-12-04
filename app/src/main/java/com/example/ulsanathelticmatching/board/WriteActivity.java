@@ -14,6 +14,8 @@ import android.widget.Toast;
 
 import com.example.ulsanathelticmatching.R;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -32,7 +34,7 @@ public class WriteActivity extends AppCompatActivity {
     int dayOfMonth;
     Calendar calendar;
 
-    EditText edt_title, edt_content;
+    TextInputEditText edt_title, edt_content;
 
     private FirebaseAuth mAuth;
 
@@ -44,8 +46,8 @@ public class WriteActivity extends AppCompatActivity {
         btn_date = (Button)findViewById(R.id.select_date);
         btn_save = (Button)findViewById(R.id.btn_save);
         btn_cancel = (Button)findViewById(R.id.btn_cancel);
-        edt_title = (EditText)findViewById(R.id.edt_title);
-        edt_content = (EditText)findViewById(R.id.edt_content);
+        edt_title = (TextInputEditText) findViewById(R.id.edt_title);
+        edt_content = (TextInputEditText) findViewById(R.id.edt_content);
         tv_date = (TextView)findViewById(R.id.tv_date);
         sp_sports = (Spinner)findViewById(R.id.sp_sports);
         sp_area = (Spinner)findViewById(R.id.sp_area);

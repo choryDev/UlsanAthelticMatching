@@ -17,7 +17,7 @@
     <string name="menu_tools">Tools</string>
     <string name="menu_send">로그아웃</string>
 
-    <string-array name = "kakao_path_find_btn">
+    <string-array name="kakao_path_find_btn">
         <item>"자동차"</item>
         <item>"대중교통"</item>
         <item>"도보"</item>

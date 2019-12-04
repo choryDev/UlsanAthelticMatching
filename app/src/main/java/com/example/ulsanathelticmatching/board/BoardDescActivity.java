@@ -52,10 +52,6 @@ public class BoardDescActivity extends AppCompatActivity {
 
          chatBtn = (Button)findViewById(R.id.btn_chat);
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 88b16e06a9c64d7771e4414adaf6f2e3b071fda2
         Glide
                 .with(this)
                 .load(Uri.parse(item.img))

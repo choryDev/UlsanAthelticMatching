@@ -9,9 +9,6 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.example.ulsanathelticmatching.R;
-import com.example.ulsanathelticmatching.board.BoardAdapters;
-import com.example.ulsanathelticmatching.board.BoardDescActivity;
-import com.example.ulsanathelticmatching.board.BoardItem;
 import com.example.ulsanathelticmatching.model.GymModel;
 
 import org.json.JSONArray;
@@ -22,7 +19,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.List;
 
 public class MapActivity extends AppCompatActivity {
 

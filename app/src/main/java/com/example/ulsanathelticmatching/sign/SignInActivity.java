@@ -98,7 +98,8 @@ public class SignInActivity extends AppCompatActivity implements GoogleApiClient
     @Override
     public void onStart() {
         super.onStart();
-        // Check if user is signed in (non-null) and update UI accordingly.
+        //생명주기 onStart로 로그인 세션이 남아 있는지 확인을 한다.
+        //로그인이 되어 있으면 getCurrentUser();가 null이 아니다.
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if(currentUser == null){
             Log.d("애러 내용", "로그인 안되어 있음 세션 없음");
@@ -109,16 +110,19 @@ public class SignInActivity extends AppCompatActivity implements GoogleApiClient
         }
     }
 
-        private boolean checkNewRegister(){ //신규인지 확인하는 함수
+        private boolean checkNewRegister(){
+        //신규인지 확인하는 함수
+        // Firebase에서 인증과 DB를 따로 저장하기 때문에
+        //DB에서 users테이블을 꺼내 식별자 uid가 같은게 있는지 확인을 한다
         final String myUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        final boolean[] checked1 = {false};
+        final boolean[] checked1 = {false};//같은게 없으면 false를 리턴
         FirebaseDatabase.getInstance().getReference().child("users").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     UserModel userModel = snapshot.getValue(UserModel.class);
-                    if (userModel.uid.equals(myUid)) {
-                        checked1[0] = true;
+                    if (userModel.uid.equals(myUid)) { //DB에 uid가 같으면
+                        checked1[0] = true; //true리턴
                     }
                 }
             }
@@ -131,15 +135,17 @@ public class SignInActivity extends AppCompatActivity implements GoogleApiClient
     }
 
     public void makeUsersTable(){
-        UserModel userModel = new UserModel();
+        //DB에 회원정보를 저장하는 함수
+        UserModel userModel = new UserModel(); //UserModel객체에 저장을 한다
+        //mAuth.getCurrentUser()에는 인증을 한 사이트의 회원 정보가 담겨 있다
         String uid = mAuth.getCurrentUser().getUid();
-        userModel.uid = uid;
-        userModel.profileImageUrl = String.valueOf(mAuth.getCurrentUser().getPhotoUrl());
-        userModel.userName = mAuth.getCurrentUser().getDisplayName();
+        userModel.uid = uid; //인증 식별자 uid
+        userModel.profileImageUrl = String.valueOf(mAuth.getCurrentUser().getPhotoUrl()); //프로필사진
+        userModel.userName = mAuth.getCurrentUser().getDisplayName();//사용자 이름
 
         FirebaseDatabase.getInstance().getReference().child("users").child(uid).setValue(userModel).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
-            public void onSuccess(Void aVoid) {
+            public void onSuccess(Void aVoid) {//DB에 저장을 하고 성공을 하였을 경우 메인화면으로 간다.
                 Intent i = new Intent(SignInActivity.this, MainActivity.class);
                 startActivity(i);
                 finish();
@@ -173,22 +179,14 @@ public class SignInActivity extends AppCompatActivity implements GoogleApiClient
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
-                            if(checkNewRegister()){
-                                //Auth에 이름 넣기
-                                UserProfileChangeRequest userProfileChangeRequest = new UserProfileChangeRequest.Builder().setDisplayName(mAuth.getCurrentUser().getDisplayName()).build();
-                                task.getResult().getUser().updateProfile(userProfileChangeRequest);
-
-                                Toast.makeText(SignInActivity.this, "사용자님 반갑습니다^^", Toast.LENGTH_SHORT).show();
+                            UserProfileChangeRequest userProfileChangeRequest = new UserProfileChangeRequest.Builder().setDisplayName(mAuth.getCurrentUser().getDisplayName()).build();
+                            task.getResult().getUser().updateProfile(userProfileChangeRequest);
+                            if(checkNewRegister()){//기존에 회원인지 확인을 합니다 회원일 경우 true
                                 Intent i = new Intent(SignInActivity.this, MainActivity.class);
                                 startActivity(i);
                                 finish();
-                            }else{
-                                //Auth에 이름 넣기
-                                UserProfileChangeRequest userProfileChangeRequest = new UserProfileChangeRequest.Builder().setDisplayName(mAuth.getCurrentUser().getDisplayName()).build();
-                                task.getResult().getUser().updateProfile(userProfileChangeRequest);
-
-                                Toast.makeText(SignInActivity.this, "신규 사용자님 반갑습니다^^", Toast.LENGTH_SHORT).show();
-                                makeUsersTable();
+                            }else{//기존 회원이 아니면 false
+                                makeUsersTable();//DB에 회원정보를 저장을 하는 함수 호출
                             }
                         }else{
                             Toast.makeText(SignInActivity.this, "파이어베이스에 등록 되지 않습니다", Toast.LENGTH_SHORT).show();
@@ -224,20 +222,14 @@ public class SignInActivity extends AppCompatActivity implements GoogleApiClient
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            if(checkNewRegister()){
-                                //Auth에 이름 넣기
-                                UserProfileChangeRequest userProfileChangeRequest = new UserProfileChangeRequest.Builder().setDisplayName(mAuth.getCurrentUser().getDisplayName()).build();
-                                task.getResult().getUser().updateProfile(userProfileChangeRequest);
-                                Toast.makeText(SignInActivity.this, "사용자님 반갑습니다^^", Toast.LENGTH_SHORT).show();
+                            UserProfileChangeRequest userProfileChangeRequest = new UserProfileChangeRequest.Builder().setDisplayName(mAuth.getCurrentUser().getDisplayName()).build();
+                            task.getResult().getUser().updateProfile(userProfileChangeRequest);
+                            if(checkNewRegister()){//기존에 회원인지 확인을 합니다 회원일 경우 true
                                     Intent i = new Intent(SignInActivity.this, MainActivity.class);
                                     startActivity(i);
                                     finish();
-                            }else{
-                                //Auth에 이름 넣기
-                                UserProfileChangeRequest userProfileChangeRequest = new UserProfileChangeRequest.Builder().setDisplayName(mAuth.getCurrentUser().getDisplayName()).build();
-                                task.getResult().getUser().updateProfile(userProfileChangeRequest);
-                                Toast.makeText(SignInActivity.this, "신규 사용자님 반갑습니다^^", Toast.LENGTH_SHORT).show();
-                                makeUsersTable();
+                            }else{//기존 회원이 아니면 false
+                                makeUsersTable();//DB에 회원정보를 저장을 하는 함수 호출
                             }
                         } else {
                             Toast.makeText(SignInActivity.this, "구글 로그인 실패 되었습니다", Toast.LENGTH_SHORT).show();
@@ -248,10 +240,5 @@ public class SignInActivity extends AppCompatActivity implements GoogleApiClient
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-    }
-
-    public void goTEST(View view) {
-        Intent i = new Intent(getApplicationContext(), MainActivity.class);
-        startActivity(i);
     }
 }

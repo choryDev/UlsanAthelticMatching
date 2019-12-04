@@ -147,20 +147,4 @@ public class GymDescActivity extends AppCompatActivity implements OnMapReadyCall
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
     }
-
-    final LocationListener gpsLocationListener = new LocationListener() {
-        public void onLocationChanged(Location location) {
-            longitude = location.getLongitude();
-            latitude = location.getLatitude();
-        }
-
-        public void onStatusChanged(String provider, int status, Bundle extras) {
-        }
-
-        public void onProviderEnabled(String provider) {
-        }
-
-        public void onProviderDisabled(String provider) {
-        }
-    };
 }

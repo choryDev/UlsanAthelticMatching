@@ -15,11 +15,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.ulsanathelticmatching.R;
 
-import com.google.android.material.button.MaterialButton;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+import com.example.ulsanathelticmatching.model.BoardItem;
 
 import com.example.ulsanathelticmatching.chat.Message2Activity;
 

@@ -13,6 +13,7 @@ import com.example.ulsanathelticmatching.chat.ChatActivity;
 import com.example.ulsanathelticmatching.chat.Message2Activity;
 import com.example.ulsanathelticmatching.map.MapActivity;
 //import com.example.ulsanathelticmatching.chat.ChatActivity;
+import com.example.ulsanathelticmatching.myboard.MyBoardActivity;
 import com.example.ulsanathelticmatching.sign.SignInActivity;
 import com.facebook.login.LoginManager;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -77,7 +78,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         sp_sport.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                Toast.makeText(getApplicationContext(), "테스트", Toast.LENGTH_SHORT).show();
+//                view.get
             }
 
             @Override
@@ -115,6 +116,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
+            //동그런거 누르면 메뉴가 보여진다.
             @Override
             public void onClick(View view) {
                 drawer.openDrawer(GravityCompat.START);
@@ -137,7 +139,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 .into(authAvatar);
 
        Log.d("에러 내용", String.valueOf(mAuth.getCurrentUser().getPhotoUrl()));
-
         passPushTokenToServer();
 
     }
@@ -161,7 +162,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (id == R.id.nav_chat) {
             Intent i = new Intent(this, ChatActivity.class);
             startActivity(i);
-        } else if (id == R.id.nav_write) {
+        }else if (id == R.id.nav_my) {
+            Intent i = new Intent(this, MyBoardActivity.class);
+            startActivity(i);
+        }else if (id == R.id.nav_write) {
             Intent i = new Intent(this, WriteActivity.class);
             startActivity(i);
         } else if (id == R.id.nav_gym) {

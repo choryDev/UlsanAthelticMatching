@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.ulsanathelticmatching.R;
+import com.example.ulsanathelticmatching.model.BoardItem;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
@@ -77,13 +78,15 @@ public class WriteActivity extends AppCompatActivity {
         btn_save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                btn_save.setClickable(false);
+                //이렇게 버튼을 한번만 누를 수 있게 안하면 여러개 저장이 된다
 
                 String title = edt_title.getText().toString();
                 String date = tv_date.getText().toString();
                 String content = edt_content.getText().toString();
 
-                //만약 값이 없을 경우 리턴시킨다
-                if(title == "" ||date == "" || content == ""  ){
+                //만약 제목, 시간, 내용 값이 없으면 안되므로 리턴시킨다
+                if(title.equals("") ||date.equals("날짜 정보")|| content.equals("")){
                     Toast.makeText(getApplicationContext(), "제목 날짜 내용 기입해주세요", Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -92,7 +95,7 @@ public class WriteActivity extends AppCompatActivity {
                 Date time = new Date();
 
                 BoardItem item = new BoardItem();
-                item.primarykey = pkformat.format(time);
+                item.primarykey = mAuth.getCurrentUser().getUid()+pkformat.format(time);
                 item.uid = mAuth.getCurrentUser().getUid();
                 item.name  = mAuth.getCurrentUser().getDisplayName();
                 item.img  = String.valueOf(mAuth.getCurrentUser().getPhotoUrl());
@@ -103,10 +106,11 @@ public class WriteActivity extends AppCompatActivity {
                 item.area = sp_area.getSelectedItem().toString();
 
                 //firebaseDatabase객체에 BoardItem에 객체를 저장
-                FirebaseDatabase.getInstance().getReference().child("BoardItem").child(pkformat.format(time)).setValue(item)
+                FirebaseDatabase.getInstance().getReference().child("BoardItem").child(mAuth.getCurrentUser().getUid()+pkformat.format(time)).setValue(item)
                         .addOnSuccessListener(new OnSuccessListener<Void>() { //DB에 정상적으로 데이터가 들어갔을 경우 실행이 되는 함수
                     @Override
                     public void onSuccess(Void aVoid) {
+                        btn_save.setClickable(true);//저장 성공하여 버튼을 다시 사용할 수 있게 한다.
                         Toast.makeText(getApplicationContext(), "경기가 등록 되었습니다", Toast.LENGTH_SHORT).show();
                         finish();
                     }

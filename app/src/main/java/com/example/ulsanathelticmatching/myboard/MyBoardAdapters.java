@@ -1,7 +1,8 @@
-package com.example.ulsanathelticmatching.board;
+package com.example.ulsanathelticmatching.myboard;
 
 import android.content.Context;
 import android.net.Uri;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import androidx.annotation.NonNull;
 import com.bumptech.glide.Glide;
 import com.example.ulsanathelticmatching.R;
 import com.example.ulsanathelticmatching.model.BoardItem;
+import com.example.ulsanathelticmatching.model.UserModel;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -23,29 +25,30 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BoardAdapters extends BaseAdapter {
+import static com.facebook.FacebookSdk.getApplicationContext;
+
+public class MyBoardAdapters extends BaseAdapter {
     private Context mContext = null;
     private int layout = 0;
     private List<BoardItem> boardItemslist = null;
     private LayoutInflater inflater = null;
     private FirebaseAuth mAuth;
 
-    public BoardAdapters(Context c, int l, String sports, String areas) {
+    ImageView image, rival_avatar;
+    TextView sport, area, title, date, name, rival_name ;
+
+    public MyBoardAdapters(Context c, int l) {
         mAuth = FirebaseAuth.getInstance();
         boardItemslist = new ArrayList<>();
 
-        if(sports != null && areas !=null){
-
-        }
         FirebaseDatabase.getInstance().getReference().child("BoardItem").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 boardItemslist.clear();
                 for (DataSnapshot item : dataSnapshot.getChildren()) {
                     BoardItem boardItem = item.getValue(BoardItem.class);
-                    //자신의 uid와 작성자 uid, 경기 상대편 uid를 비교하여
-                    //만약 같을 경우 조회를 안한다
-                    if(!mAuth.getUid().equals(boardItem.uid)&&!mAuth.getUid().equals(boardItem.rivaluid))
+                    //자신의 uid와 작성자 uid, 상대편 uid가 같으면 자신이 관련된 글이므로 조회
+                    if(mAuth.getUid().equals(boardItem.uid)||mAuth.getUid().equals(boardItem.rivaluid))
                         boardItemslist.add(boardItem);
                 }
                 notifyDataSetChanged();
@@ -86,12 +89,15 @@ public class BoardAdapters extends BaseAdapter {
         if(convertView == null) {
             convertView = inflater.inflate(this.layout, parent, false);
         }
-        ImageView image = (ImageView) convertView.findViewById(R.id.iv_avatar);
-        TextView sport = (TextView) convertView.findViewById(R.id.tv_sport);
-        TextView area = (TextView) convertView.findViewById(R.id.tv_area);
-        TextView title = (TextView) convertView.findViewById(R.id.tv_title);
-        TextView date = (TextView) convertView.findViewById(R.id.tv_date);
-        TextView name = (TextView) convertView.findViewById(R.id.tv_name);
+        image = (ImageView) convertView.findViewById(R.id.iv_avatar);
+        sport = (TextView) convertView.findViewById(R.id.tv_sport);
+        area = (TextView) convertView.findViewById(R.id.tv_area);
+        title = (TextView) convertView.findViewById(R.id.tv_title);
+        date = (TextView) convertView.findViewById(R.id.tv_date);
+        name = (TextView) convertView.findViewById(R.id.tv_name);
+
+        rival_avatar = (ImageView) convertView.findViewById(R.id.iv_rv_avatar);
+        rival_name = (TextView) convertView.findViewById(R.id.tv_rv_name);
 
         Glide
                 .with(convertView)
@@ -105,6 +111,32 @@ public class BoardAdapters extends BaseAdapter {
         date.setText(boardItemslist.get(position).date);
         name.setText(boardItemslist.get(position).name);
 
+        //경기의 상대방이 정해진 경우 상대편에 누구인지 띄운다
+        //만약 상대방이 ""이면 프로필사진와 이름을 안띄우고
+        //상대방이 정해져 있으면 프로필사진과 이름을 띄운다
+        if(!boardItemslist.get(position).rivaluid.equals(""))
+        setMatchingRival((boardItemslist.get(position).rivaluid));
+
         return convertView;
+    }
+    public void setMatchingRival(String rivaluid){//DB에서 상대편의 정보를 가져온다
+        FirebaseDatabase.getInstance().getReference().child("users").child(rivaluid).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                UserModel userModel = dataSnapshot.getValue(UserModel.class);
+                Glide
+                        .with(getApplicationContext())
+                        .load(Uri.parse(userModel.profileImageUrl))
+                        .circleCrop()
+                        .placeholder(R.drawable.logo)
+                        .into(rival_avatar);
+                rival_name.setText(userModel.userName);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 }

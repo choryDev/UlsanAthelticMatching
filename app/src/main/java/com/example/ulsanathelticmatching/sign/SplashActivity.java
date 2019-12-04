@@ -28,14 +28,14 @@ public class SplashActivity extends AppCompatActivity {
         setContentView(R.layout.activity_splash);
 
         linearLayout = findViewById(R.id.splashactivity_linaerlayout);
-        mFirebaseRemoteConfig = FirebaseRemoteConfig.getInstance();
+        mFirebaseRemoteConfig = FirebaseRemoteConfig.getInstance(); //Firebase에서 원격으로 조종이 가능한 Remoteconfig객체
         FirebaseRemoteConfigSettings configSettings = new FirebaseRemoteConfigSettings.Builder()
                 .setDeveloperModeEnabled(BuildConfig.DEBUG)
                 .build();
         mFirebaseRemoteConfig.setConfigSettings(configSettings);
-        mFirebaseRemoteConfig.setDefaults(R.xml.default_config);
-
-        mFirebaseRemoteConfig.fetch(0)
+        mFirebaseRemoteConfig.setDefaults(R.xml.default_config);//Firebase Remoteconfig객체에서 색깔을 불러와서
+                                                                //네트워크가 연결이 되었을 경우 색깔이 바뀌게 된다
+        mFirebaseRemoteConfig.fetch(0)//
                 .addOnCompleteListener(this, new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
@@ -43,6 +43,7 @@ public class SplashActivity extends AppCompatActivity {
                             //인터넷 연결 됨
                             mFirebaseRemoteConfig.activateFetched();
                         } else {
+
                         }
                         displayMessage();
                     }

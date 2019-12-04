@@ -43,7 +43,7 @@ import java.util.List;
 import java.util.Map;
 
 public class MyBoardDescActivity extends AppCompatActivity {
-
+    //내 게시판 아이템의 상세정보 액티비티
     private BoardItem item;
     private TextView sport, area, title, date, name, content, rival_name;
     private ImageView image, rival_avatar;
@@ -61,11 +61,11 @@ public class MyBoardDescActivity extends AppCompatActivity {
         setContentView(R.layout.activity_myboard_desc);
 
         uid = FirebaseAuth.getInstance().getCurrentUser().getUid(); //내식별자 uid 생성
-
+        //나와 매칭을 할 수 있는 사람은 나와 채팅을 한적 있는 사람
         //내가 소속된 방을 찾음
         //채팅방안의 유저 중에 내가 있으면 그 채팅방 배열을 가져온다
-        FirebaseDatabase.getInstance().getReference().child("chatrooms") ///채팅방을 가져 옴
-                .orderByChild("users/" + uid).equalTo(true).addListenerForSingleValueEvent(new ValueEventListener() { //그 채팅방에 내가 있어야함
+        FirebaseDatabase.getInstance().getReference().child("chatrooms") ///채팅방을 가져 옴 그러나 그 채팅방에 내가 있어야 가져온다
+                .orderByChild("users/" + uid).equalTo(true).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot item : dataSnapshot.getChildren()) {//내가 포함된 채팅방 배열 확인
@@ -144,7 +144,7 @@ public class MyBoardDescActivity extends AppCompatActivity {
         });
     }
 
-    public void showDialog(Activity activity, String[] arr){
+    public void showDialog(Activity activity, String[] arr){//커스텀 다이얼로그
         final Dialog dialog = new Dialog(activity);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCancelable(false);
@@ -157,17 +157,16 @@ public class MyBoardDescActivity extends AppCompatActivity {
                 dialog.dismiss();
             }
         });
-
-        ListView listView = (ListView) dialog.findViewById(R.id.dialog_listview);
+        ListView listView = (ListView) dialog.findViewById(R.id.dialog_listview);//다이얼로그 안에 리스트뷰를 넣는다
         ArrayAdapter arrayAdapter = new ArrayAdapter(this,R.layout.my_board_dialog_items, R.id.tv_name, arr);
-        listView.setAdapter(arrayAdapter);
+        listView.setAdapter(arrayAdapter);//어뎁터 연결
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
                 final String rivalUid = livalUidLists.get(position);
-                Map<String,Object> map = new HashMap<>();
-                map.put("rivaluid",rivalUid);//rivaluid에 상대편 식별자를 넣는다
+                Map<String,Object> map = new HashMap<>();//Firebase에 저장이된 경기 객체에
+                map.put("rivaluid",rivalUid);//rivaluid에 상대편 식별자를 넣는다 그럼 매칭 성공
                 FirebaseDatabase.getInstance().getReference().child("BoardItem").child(item.primarykey).updateChildren(map).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {

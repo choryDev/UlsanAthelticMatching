@@ -13,7 +13,7 @@ import com.example.ulsanathelticmatching.model.GymModel;
 import java.util.ArrayList;
 
 public class MapAdapters extends BaseAdapter {
-
+    //울산 체육관 정보를 담은 어뎁터
     Context mContext = null;
     LayoutInflater mLayoutInflater = null;
     ArrayList<GymModel> sample;
@@ -39,7 +39,7 @@ public class MapAdapters extends BaseAdapter {
         return sample.get(position);
     }
 
-    @Override
+    @Override//리스트뷰의 자식 플래그먼트에 어레이리스트의 요소를 세팅
     public View getView(int position, View converView, ViewGroup parent) {
         View view = mLayoutInflater.inflate(R.layout.activity_map_items, null);
 

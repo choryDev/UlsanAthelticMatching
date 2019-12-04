@@ -5,24 +5,23 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-
+    <uses-permission android:name="android.permission.VIBRATE" />
     <application
         android:allowBackup="true"
         android:hardwareAccelerated="false"
-        android:largeHeap="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/iconlogo"
         android:label="@string/app_name"
+        android:largeHeap="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".myboard.MyBoardDescActivity"></activity>
+        <activity android:name=".map.GymDescripActivity"></activity>
+        <activity android:name=".myboard.MyBoardDescActivity" />
         <activity android:name=".myboard.MyBoardActivity" />
-        <!--<activity android:name=".news.NewsActivity"></activity>-->
         <activity android:name=".chat.ChatActivity" />
         <activity android:name=".map.GymWebActivity" />
-        <activity android:name=".map.GymDescActivity" />
-        <activity android:name=".alarm.AlarmActivity" /> <!-- android:theme="@style/AppTheme"> -->
+        <activity android:name=".alarm.AlarmActivity" />
         <activity android:name=".chat.Message2Activity" />
         <activity android:name=".map.MapActivity" />
         <activity android:name=".board.BoardDescActivity" />
@@ -39,6 +38,10 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyBy9mDRs7L8YlywDbdpOw6K1Yv241eAbIE" />
+
+        <uses-library
+            android:name="org.apache.http.legacy"
+            android:required="false" />
 
         <activity
             android:name="com.facebook.FacebookActivity"

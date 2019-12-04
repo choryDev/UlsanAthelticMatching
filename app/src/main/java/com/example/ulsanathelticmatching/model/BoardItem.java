@@ -2,7 +2,7 @@ package com.example.ulsanathelticmatching.model;
 
 import java.io.Serializable;
 
-public class BoardItem implements Serializable {
+public class BoardItem implements Serializable {//게시판 객체 intent로 객체를 보내기 위해 Serializable를 implements한다
     public String primarykey; //식별자
     public String uid; //게시글을 올린 사람의 식별자
     public String rivaluid = ""; //상대 편의 식별자를 담을 객체

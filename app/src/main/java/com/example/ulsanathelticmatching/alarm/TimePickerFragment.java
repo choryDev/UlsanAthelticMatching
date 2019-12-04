@@ -17,7 +17,7 @@ public class TimePickerFragment extends DialogFragment {
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        Calendar c = Calendar.getInstance();
+        Calendar c = Calendar.getInstance(); //Calendar객체를 이용하여 현재 시간을 기본 시간으로 지정
         int hour = c.get(Calendar.HOUR_OF_DAY);
         int minute = c.get(Calendar.MINUTE);
 

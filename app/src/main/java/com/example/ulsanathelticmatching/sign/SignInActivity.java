@@ -42,11 +42,8 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.kakao.usermgmt.response.model.User;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 public class SignInActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener{
 

@@ -2,7 +2,7 @@ package com.example.ulsanathelticmatching.model;
 
 import java.io.Serializable;
 
-public class GymModel implements Serializable {
+public class GymModel implements Serializable {//체육관 객체
     public String name;//개방장소명
     public String locationName;//개방시설명
     public String typeClassification;//개방시설유형구분

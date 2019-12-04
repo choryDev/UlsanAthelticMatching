@@ -55,10 +55,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private Spinner sp_sport, sp_area;
 
-    BoardAdapters myadapter;
-    ArrayAdapter<CharSequence> spSport, spArea;
+    BoardAdapters myadapter; //게시판을 연결하는 어뎁터
     private String select_sport,select_area;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,44 +73,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         sp_sport = (Spinner)findViewById(R.id.spi_sport); //운동 선택 스피너
         sp_area = (Spinner)findViewById(R.id.spi_area); //지역 선택 스피너
 
-        sp_sport.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-//                view.get
-            }
+        myadapter = new BoardAdapters(getApplicationContext(), R.layout.activity_board_items,select_area,select_sport);//게시판 어뎁터
+        listView.setAdapter(myadapter);//게시판 어뎁터를 연결
 
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
-
-        sp_area.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                Toast.makeText(getApplicationContext(), sp_area.getSelectedItem().toString(), Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
-
-        myadapter = new BoardAdapters(getApplicationContext(), R.layout.activity_board_items,select_area,select_sport);
-        listView.setAdapter(myadapter);
-
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {//리스트뷰 클릭 리스너
+            @Override //리스트뷰안의 상세 정보를 보기 위해 한 리스트뷰의 정보를 가지고 인텐트로 넘어간다
             public void onItemClick(AdapterView<?> parent, View view,int position, long id) {
                 Intent intent = new Intent(getApplicationContext(), BoardDescActivity.class); // 다음넘어갈 화면
-                intent.putExtra("OBJECT", (Serializable) myadapter.getItem(position));
+                intent.putExtra("OBJECT", (Serializable) myadapter.getItem(position));//Serializable을 상속받아 인텐트로 객체를 넘긴다
                 startActivity(intent);
             }
         });
 
-
-        navigationView.setNavigationItemSelectedListener(this);
+        navigationView.setNavigationItemSelectedListener(this);//우측 네비게이션 연결
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -131,7 +104,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         authName.setText(mAuth.getCurrentUser().getDisplayName());
         authEmail.setText(mAuth.getCurrentUser().getEmail());
 
-        Glide
+        Glide //url사진을 불러와야기 때문에 ImageView로 불러오지 못하여 Glide를 이용합니다.
                 .with(this)
                 .load(mAuth.getCurrentUser().getPhotoUrl())
                 .circleCrop()
@@ -140,11 +113,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
        Log.d("에러 내용", String.valueOf(mAuth.getCurrentUser().getPhotoUrl()));
         passPushTokenToServer();
-
     }
 
     @Override
-    public void onBackPressed() {
+    public void onBackPressed() {//네비게이션 메뉴를 옆으로 미는 함수
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
@@ -198,6 +170,5 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         //DB에 토큰넣기
         FirebaseDatabase.getInstance().getReference().child("users").child(uid).updateChildren(map);
-
     }
 }

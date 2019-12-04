@@ -97,10 +97,10 @@ public class WriteActivity extends AppCompatActivity {
                 Date time = new Date();
 
                 BoardItem item = new BoardItem();
-                item.primarykey = mAuth.getCurrentUser().getUid()+pkformat.format(time);
+                item.primarykey = mAuth.getCurrentUser().getUid()+pkformat.format(time); //게시물 이름을 사용자이름 + 시간 안겹치게 하기 위해
                 item.uid = mAuth.getCurrentUser().getUid();
                 item.name  = mAuth.getCurrentUser().getDisplayName();
-                item.img  = String.valueOf(mAuth.getCurrentUser().getPhotoUrl());
+                item.img  = String.valueOf(mAuth.getCurrentUser().getPhotoUrl());//Url을 문자열로 저장
                 item.title  = title;
                 item.date = date;
                 item.content = content;
@@ -112,7 +112,7 @@ public class WriteActivity extends AppCompatActivity {
                         .addOnSuccessListener(new OnSuccessListener<Void>() { //DB에 정상적으로 데이터가 들어갔을 경우 실행이 되는 함수
                     @Override
                     public void onSuccess(Void aVoid) {
-                        btn_save.setClickable(true);//저장 성공하여 버튼을 다시 사용할 수 있게 한다.
+                        btn_save.setClickable(true);//저장 성공하여 버튼을 다시 사용할 수 있게 한다. 여러번 누르면 여러 데이터가 들어가는 걸 막기 위해
                         Toast.makeText(getApplicationContext(), "경기가 등록 되었습니다", Toast.LENGTH_SHORT).show();
                         finish();
                     }

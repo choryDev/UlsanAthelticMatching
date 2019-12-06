@@ -127,10 +127,11 @@ public class ChatActivity extends AppCompatActivity {
 
                     //상대방 정보를 userModel 당음
                     UserModel userModel = dataSnapshot.getValue(UserModel.class);
-                    Glide.with(customViewHolder.itemView.getContext())    //이미지 로딩 라이브러리
-                            .load(userModel.profileImageUrl)              //userModel의 profileImageUrl을 가져옴
-                            .apply(new RequestOptions().circleCrop())     //사진을 원형으로 자름
-                            .into(customViewHolder.imageView);            // 뷰홀더의 이미지뷰에 이미지를 남음
+                    //이미지 로딩 라이브러리 userModel의 profileImageUrl을 가져옴 사진을 원형으로 자름 뷰홀더의 이미지뷰에 이미지를 남음
+                    Glide.with(customViewHolder.itemView.getContext())
+                            .load(userModel.profileImageUrl)
+                            .apply(new RequestOptions().circleCrop())
+                            .into(customViewHolder.imageView);
                     customViewHolder.textView_title.setText(userModel.userName);  //뷰홀더의 textView_title의 userModel객체의 userName 값으로 담기
 =======
                 if (!user.equals(uid)) {   //만약 내가 아니면 상대방 uid 담기

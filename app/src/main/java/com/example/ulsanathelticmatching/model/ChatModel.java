@@ -8,9 +8,9 @@ public class ChatModel {//체팅방 객체
     public Map<String,Comment> comments = new HashMap<>(); //채팅방 대화내용
 
     public static class Comment{
-        public String uid;
-        public String message;
-        public Object timestamp;
+        public String uid;  //메세지보낸 사람uid
+        public String message;  //메세지 내용
+        public Object timestamp;  //메세지 보낸 시간
     }
 
 }

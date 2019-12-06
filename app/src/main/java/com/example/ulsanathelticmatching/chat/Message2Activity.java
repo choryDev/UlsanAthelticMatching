@@ -95,6 +95,7 @@ public class Message2Activity extends AppCompatActivity {
                     comment.uid = uid;   //객체에 uid 저장
                     comment.message = editText.getText().toString(); //메세지 문자열 저장
                     comment.timestamp = ServerValue.TIMESTAMP; //1970/1/1 시간을 뺀 밀리세컨즈값
+                    //uid가 있을경우 코멘트 넣어서 쌓이게 함
                     FirebaseDatabase.getInstance().getReference().child("chatrooms").child(chatRoomUid).child("comments").push().setValue(comment).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
@@ -142,16 +143,17 @@ public class Message2Activity extends AppCompatActivity {
 
     }
 
+    //chatrooms의 users안에 uid에 접근하여 중복을 확인
     void checkChatRoom() {
         FirebaseDatabase.getInstance().getReference().child("chatrooms").orderByChild("users/" + uid).equalTo(true).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {   //데이터를 스냅샷해옴
                 for (DataSnapshot item : dataSnapshot.getChildren()) {
-                    ChatModel chatModel = item.getValue(ChatModel.class);
-                    if (chatModel.users.containsKey(destinationUid)) {
-                        chatRoomUid = item.getKey();
-                        button.setEnabled(true);
-                        recyclerView.setLayoutManager(new LinearLayoutManager(Message2Activity.this));
+                    ChatModel chatModel = item.getValue(ChatModel.class);//chatrooms의 users에 있는 uid를 체크
+                    if (chatModel.users.containsKey(destinationUid)) { //요구한 사람의 아이디가 있는지 체크
+                        chatRoomUid = item.getKey(); //있을 경우 chatroomuid에 아이템의 키값(방id)을 넣음
+                        button.setEnabled(true); //메시지 전송이 완료되면 버튼 사용o
+                        recyclerView.setLayoutManager(new LinearLayoutManager(Message2Activity.this));  //message2Activity
                         recyclerView.setAdapter(new RecycleViewAdapter());
                     }
                 }
@@ -165,13 +167,13 @@ public class Message2Activity extends AppCompatActivity {
 
     }
 
+    //어뎁터 생성
     class RecycleViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-        //코멘트를 담음
-        List<ChatModel.Comment> comments;
+        List<ChatModel.Comment> comments; //코멘트를 담을 배열
 
         public RecycleViewAdapter() {
-            comments = new ArrayList<>();
+            comments = new ArrayList<>();  //배열 선언
 
             FirebaseDatabase.getInstance().getReference().child("users").child(destinationUid).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
@@ -190,13 +192,14 @@ public class Message2Activity extends AppCompatActivity {
 
         //message리스트 받아옴
         void getMessageList() {
+            //chatrooms의 해당 채팅방uid에 접근하여 코멘트를 가져옴
             FirebaseDatabase.getInstance().getReference().child("chatrooms").child(chatRoomUid).child("comments").addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     comments.clear(); //데이터가 쌓이는 것을 방지
 
                     for (DataSnapshot item : dataSnapshot.getChildren()) {
-                        comments.add(item.getValue(ChatModel.Comment.class));
+                        comments.add(item.getValue(ChatModel.Comment.class)); //코멘트를 넣음
                     }
                     notifyDataSetChanged(); //메세지 갱신
 
@@ -224,25 +227,25 @@ public class Message2Activity extends AppCompatActivity {
 
             if (comments.get(position).uid.equals(uid)) {
                 //내가 말하는 부분
-                messageViewHolder.textView_message.setText(comments.get(position).message);   //
-                messageViewHolder.textView_message.setBackgroundResource(R.drawable.rightbubble);
+                messageViewHolder.textView_message.setText(comments.get(position).message);   //내 메세지 가져옴
+                messageViewHolder.textView_message.setBackgroundResource(R.drawable.rightbubble); //메제시 버블 이미지
                 messageViewHolder.linearLayout_destination.setVisibility(View.INVISIBLE); //내 프로필 감춤
-                messageViewHolder.textView_message.setTextSize(20);
-                messageViewHolder.linearLayout_main.setGravity(Gravity.RIGHT);
+                messageViewHolder.textView_message.setTextSize(20); //글자 크기
+                messageViewHolder.linearLayout_main.setGravity(Gravity.RIGHT); //내 메세지는 오른쪽에 붙임
             } else {
                 //상대방 메세지
 
-                //상대방 프로필사진
+                //상대방 프로필사진 가져와서 수정
                 Glide.with(holder.itemView.getContext())
                         .load(destinationuserModel.profileImageUrl)
                         .apply(new RequestOptions().circleCrop())
                         .into(messageViewHolder.imageView_profile);
-                messageViewHolder.textView_name.setText(destinationuserModel.userName);
-                messageViewHolder.linearLayout_destination.setVisibility(View.VISIBLE);
-                messageViewHolder.textView_message.setBackgroundResource(R.drawable.leftbubble);
-                messageViewHolder.textView_message.setText(comments.get(position).message);
-                messageViewHolder.textView_message.setTextSize(20);
-                messageViewHolder.linearLayout_main.setGravity(Gravity.LEFT);
+                messageViewHolder.textView_name.setText(destinationuserModel.userName); //상대방 이름 가져옴
+                messageViewHolder.linearLayout_destination.setVisibility(View.VISIBLE); //상대방 리니어레이아웃 보이게
+                messageViewHolder.textView_message.setBackgroundResource(R.drawable.leftbubble); //메세지버블이미지지정
+                messageViewHolder.textView_message.setText(comments.get(position).message); //상대방 쪽 메세지 가져옴
+                messageViewHolder.textView_message.setTextSize(20); //글자크기
+                messageViewHolder.linearLayout_main.setGravity(Gravity.LEFT); //메세지는 왼쪽에 붙임
             }
 
             //시간정제화
@@ -259,6 +262,7 @@ public class Message2Activity extends AppCompatActivity {
             return comments.size();
         }
 
+        //리스트에 들어갈 각 뷰를 관리할 뷰홀더 클래스
         private class MessageViewHolder extends RecyclerView.ViewHolder {
             public TextView textView_message;
             public TextView textView_name;

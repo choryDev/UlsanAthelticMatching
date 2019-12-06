@@ -19,18 +19,21 @@ import com.example.ulsanathelticmatching.model.NotificationModel;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
+//파이어베이스에서 제공하는 서비스 포그라운드 앱의 알림 수신을 위해 재정의
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
-        // Check if message contains a data payload.
+        // 메세지를 받은 후 처리하는 소스
+        //받은 메세지의 데이터(이름, 내용) 가져오기
         if (remoteMessage.getData().size() > 0) {
             String title = remoteMessage.getData().get("title").toString();
             String text = remoteMessage.getData().get("text").toString();
             sendNotification(title,text);
         }
     }
+
     private void sendNotification(String title, String text) {
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent(this, MainActivity.class);    //푸시알림 클릭시 전달된 인텐트
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
                 PendingIntent.FLAG_ONE_SHOT);

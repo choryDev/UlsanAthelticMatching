@@ -22,7 +22,7 @@ import com.example.ulsanathelticmatching.chat.Message2Activity;
 import java.util.List;
 
 public class BoardDescActivity extends AppCompatActivity {
-
+    //메인액티비티의 게시글을 클릭하게 되면 자세히 보여주는 액티비티
     private BoardItem item;
     private List<BoardItem> boardItemslist = null;
     private TextView sport, area, title, date, name, content;
@@ -34,7 +34,7 @@ public class BoardDescActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_board_desc);
-
+        //메인액티비티에서 가져온 아이템의 인텐트
         Intent intent = getIntent();
         item  = (BoardItem)intent.getSerializableExtra("OBJECT");
 
@@ -48,7 +48,7 @@ public class BoardDescActivity extends AppCompatActivity {
 
          chatBtn = (Button)findViewById(R.id.btn_chat);
 
-        Glide
+        Glide //Url을 불러와 ImageView에 붙일 경우 사용하는 객체
                 .with(this)
                 .load(Uri.parse(item.img))
                 .circleCrop()
@@ -62,7 +62,7 @@ public class BoardDescActivity extends AppCompatActivity {
         content.setText(item.content);
 
         chatBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
+            @Override //chatBtn을 클릭시 해당 사용자와 채팅을 할 수 있다
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), Message2Activity.class);
                 intent.putExtra("destinationUid",item.uid);  //글 작성자 uid 받아오기

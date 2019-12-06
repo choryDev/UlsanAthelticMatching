@@ -185,7 +185,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 .into(authAvatar);
 
        Log.d("에러 내용", String.valueOf(mAuth.getCurrentUser().getPhotoUrl()));
-        passPushTokenToServer();
+        passPushTokenToServer(); //토큰생성
     }
 
     @Override
@@ -232,16 +232,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return true;
     }
 
-    //푸시알람
+    //푸시알람을 위한 토큰생성
     void passPushTokenToServer(){
         String uid = FirebaseAuth.getInstance().getCurrentUser().getUid(); //uid 담기
         String token = FirebaseInstanceId.getInstance().getToken(); //토큰 만들기
 
-        //DB users의 각 값에 'pushToken : 토큰값' 형태로 넣기
+        //DB users의 각 값에 'pushToken : 토큰값' 형태의 hashmap으로 넣기
         Map<String,Object> map = new HashMap<>();
         map.put("pushToken",token);
 
-        //DB에 토큰넣기
+        //DB에 토큰을 넣기(기존DB업데이트)
         FirebaseDatabase.getInstance().getReference().child("users").child(uid).updateChildren(map);
     }
 }

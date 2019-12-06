@@ -115,21 +115,24 @@ public class Message2Activity extends AppCompatActivity {
 
         String userName = FirebaseAuth.getInstance().getCurrentUser().getDisplayName();  //사용자 프로필 이름 가져옴
         NotificationModel notificationModel = new NotificationModel();   //notificationModel객체 생성
-        notificationModel.to = destinationuserModel.pushToken;  //메세지 보내는 상대방 토큰가져옴
-        notificationModel.notification.title = userName;  //상대방 이름 가져옴
+        notificationModel.to = destinationuserModel.pushToken;  //메세지 받는 토큰가져옴
+        notificationModel.notification.title = userName;  //보낸사람 이름
         notificationModel.notification.text = editText.getText().toString();  //메세지내용 가져옴
         notificationModel.data.title = userName;  //푸시받을때 데이터 파싱
         notificationModel.data.text = editText.getText().toString();  //data의 text에 메세지 내용 넣음
 
+        //notifixationmodel을 담은 body
         RequestBody requestBody = RequestBody.create(gson.toJson(notificationModel), MediaType.parse("application/json; charset=utf8"));
+        //fcm hearders
         Request request = new Request.Builder()
                 .header("Content-Type","application/json") // 해당 서버키를 입력
                 .addHeader("Authorization","key=AAAAI_qLyCQ:APA91bFa8Ilp_4-nW7Bcr4cJqUfxUTrakNR5UpfNzm_QFXPJYpIiVqnzIx035ss4cy2HFtZ_3OpkWxkRXy-UJ-VBdgUvYwOzWD3woIWMWTEOxU2oL1lGPaQNvMKWkquxn931DU94zvHl")
                 .url("https://fcm.googleapis.com/fcm/send")
                 .post(requestBody)
                 .build();
-        OkHttpClient okHttpClient = new OkHttpClient();
+        OkHttpClient okHttpClient = new OkHttpClient(); //http 통신을 위한 OkHttpClient 객체 생성
         okHttpClient.newCall(request).enqueue(new Callback() {
+            //비동기 처리를 위해 Callback 구현
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
  //실패시

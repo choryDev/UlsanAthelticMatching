@@ -53,7 +53,6 @@ public class MapActivity extends AppCompatActivity {
     {//String으로 이루어진 json을 받음
         try{
             JSONObject jsonObject = new JSONObject(json);//
-
             JSONArray array = jsonObject.getJSONArray("records"); //json객체의 records 컬럼을 가져온다
 
             for(int i=0; i<array.length(); i++)

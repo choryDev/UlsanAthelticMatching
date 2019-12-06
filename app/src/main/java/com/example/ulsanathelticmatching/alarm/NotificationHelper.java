@@ -7,8 +7,6 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.Intent;
-import android.media.RingtoneManager;
-import android.net.Uri;
 import android.os.Build;
 
 import androidx.core.app.NotificationCompat;
@@ -45,8 +43,6 @@ public class NotificationHelper extends ContextWrapper {
         return mManager;
     }
 
-    Uri defaultSoundUri= RingtoneManager.getActualDefaultRingtoneUri(this, RingtoneManager.TYPE_NOTIFICATION);
-
     public NotificationCompat.Builder getChannelNotification() {
         //알람 객체의 화면과 설정을 하는 메써드
         Intent intent = new Intent(this, MainActivity.class);
@@ -55,10 +51,9 @@ public class NotificationHelper extends ContextWrapper {
                 intent,
                 PendingIntent.FLAG_UPDATE_CURRENT);
         return new NotificationCompat.Builder(getApplicationContext(), channelID)
-                .setSound(defaultSoundUri)
                 .setContentTitle("알람 시간입니다!")
                 .setContentText("시간 약속을 지키지 않는다면 다른 사용자에게 피해를 끼칠 수 있어요ㅠㅠ")
-                .setSmallIcon(R.drawable.logo)//알람에 아이콘을 넣음
-                .setContentIntent(pendingIntent);//알람의 인텐트를 달아 알람을 누르면 해당 엑티비티로 넘어가게 된다
+                .setSmallIcon(R.drawable.logo)
+                .setContentIntent(pendingIntent);
     }
 }

@@ -44,35 +44,21 @@ public class ChatActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
 
-<<<<<<< HEAD
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.chatactivity_recyclerview);   //리싸이클러뷰 만들기
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.chatactivity_recyclerview);   //리사이클 뷰 객체
         recyclerView.setAdapter(new ChatRecyclerViewAdapter()); //어뎁터 붙이기
-        recyclerView.setLayoutManager(new LinearLayoutManager(this)); //레이아웃을 리니어레이아웃으로 하기
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));  //어뎁터를 해당 액티비티에 연결
 
     }
 
     //뷰홀더를 관리하기 위한 어탭터 클래스
     class ChatRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         private List<ChatModel> chatModels = new ArrayList<>(); //채팅에 대한 정보를 담을 chatModels 배열 생성
-=======
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.chatactivity_recyclerview); //리사이클 뷰 객체
-        recyclerView.setAdapter(new ChatRecyclerViewAdapter()); //어뎁터로 연결
-        recyclerView.setLayoutManager(new LinearLayoutManager(this)); //어뎁터를 해당 액티비티에 연결
-    }
-
-    class ChatRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {//채팅방 연결할 어뎁터
-        private List<ChatModel> chatModels = new ArrayList<>(); //chatmodel을 담음
->>>>>>> d4503f2ddd2268ff5306235859808b01fece690d
         private String uid;
         private ArrayList<String> destinationUsers = new ArrayList<>();
 
         public ChatRecyclerViewAdapter() {
-<<<<<<< HEAD
             //채팅목록 가져옴
             uid = FirebaseAuth.getInstance().getCurrentUser().getUid();  //
-=======
-            uid = FirebaseAuth.getInstance().getCurrentUser().getUid();//내 식별자를 가지고옴
->>>>>>> d4503f2ddd2268ff5306235859808b01fece690d
 
             //Firebase Db에 chatrooms에서 사용자가 내이름이 있을 경우 가져옴
             FirebaseDatabase.getInstance().getReference().child("chatrooms").orderByChild("users/" + uid).equalTo(true).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -101,7 +87,6 @@ public class ChatActivity extends AppCompatActivity {
             return new CustomViewHolder(view);
         }
 
-
         //뷰홀더를 합침
         @Override
         public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
@@ -111,14 +96,13 @@ public class ChatActivity extends AppCompatActivity {
 
             //챗방에 있는 유저를 모두 체크
             for (String user : chatModels.get(position).users.keySet()) {
-<<<<<<< HEAD
                 if (!user.equals(uid)) {   ///만약 내가 아니면 상대방 uid 담기
                     destinationUid = user; //destionationUID(상대방 uid) uid 담음
                     destinationUsers.add(destinationUid); //destinationUsers 배열에 uid 담음
                 }
             }
 
-            // 사용자의 프로필을 로드
+            //채팅방의 밖에 화면을 보여줘야 하기 때문에 상대방 uid를 가지고 상대방 정보를 가져온다
             FirebaseDatabase.getInstance().getReference().child("users").child(destinationUid).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -126,30 +110,21 @@ public class ChatActivity extends AppCompatActivity {
                     //한번 user의 destinationUid 경로에 있는 내용의 정적 스냅샷을 읽어와서 전체 내용에 대한 변경을 읽고 수신 대기
 
                     //상대방 정보를 userModel 당음
+<<<<<<< HEAD
                     UserModel userModel = dataSnapshot.getValue(UserModel.class);
                     //이미지 로딩 라이브러리 userModel의 profileImageUrl을 가져옴 사진을 원형으로 자름 뷰홀더의 이미지뷰에 이미지를 남음
                     Glide.with(customViewHolder.itemView.getContext())
                             .load(userModel.profileImageUrl)
                             .apply(new RequestOptions().circleCrop())
                             .into(customViewHolder.imageView);
-                    customViewHolder.textView_title.setText(userModel.userName);  //뷰홀더의 textView_title의 userModel객체의 userName 값으로 담기
 =======
-                if (!user.equals(uid)) {   //만약 내가 아니면 상대방 uid 담기
-                    destinationUid = user;
-                    destinationUsers.add(destinationUid);
-                }
-            }//채팅방의 밖에 화면을 보여줘야 하기 때문에 상대방 uid를 가지고 상대방 정보를 가져온다
-            FirebaseDatabase.getInstance().getReference().child("users").child(destinationUid).addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    UserModel userModel = dataSnapshot.getValue(UserModel.class); //가져온 uid를 UserModel에 담아서 세팅
-                    Glide.with(customViewHolder.itemView.getContext())
-                            .load(userModel.profileImageUrl)
-                            .apply(new RequestOptions().circleCrop())
-                            .into(customViewHolder.imageView);
-                    customViewHolder.textView_title.setText(userModel.userName);
->>>>>>> d4503f2ddd2268ff5306235859808b01fece690d
-
+                    UserModel userModel = dataSnapshot.getValue(UserModel.class);//가져온 uid를 UserModel에 담아서 세팅
+                    Glide.with(customViewHolder.itemView.getContext())    //이미지 로딩 라이브러리
+                            .load(userModel.profileImageUrl)              //userModel의 profileImageUrl을 가져옴
+                            .apply(new RequestOptions().circleCrop())     //사진을 원형으로 자름
+                            .into(customViewHolder.imageView);            // 뷰홀더의 이미지뷰에 이미지를 남음
+>>>>>>> 3cdd37920f63f83bee30498c3746609919f88c5b
+                    customViewHolder.textView_title.setText(userModel.userName);  //뷰홀더의 textView_title의 userModel객체의 userName 값으로 담기
                 }
 
                 @Override
@@ -161,13 +136,10 @@ public class ChatActivity extends AppCompatActivity {
             //메세지를 내림차순으로 정렬 후 마지막 메세지 띄우기
             //string값(채팅메세지키값)에 대한 코멘트내용을 트리맵으로 만들어서 역순으로 정렬
             Map<String, ChatModel.Comment> commentMap = new TreeMap<>(Collections.<String>reverseOrder());
-<<<<<<< HEAD
+
             commentMap.putAll(chatModels.get(position).comments); //chatModels에 (채팅내용)comments에 대한 값을 모두 가져옴
-            String lastMessageKey = (String) commentMap.keySet().toArray()[0]; //채팅내용 중 가장 1번쨰 값의 키를 가져옴
-=======
-            commentMap.putAll(chatModels.get(position).comments);
             String lastMessageKey = (String) commentMap.keySet().toArray()[0]; //마지막 메세지를 보여주게 함
->>>>>>> d4503f2ddd2268ff5306235859808b01fece690d
+
             customViewHolder.textView_last_message.setText(chatModels.get(position).comments.get(lastMessageKey).message);
             //뷰홀더의 textView_last_message에 가져온 키값을 넣어 해당 키값의 채팅 내용을 가져옴
 
@@ -176,11 +148,8 @@ public class ChatActivity extends AppCompatActivity {
                 public void onClick(View view) {
                     //클릭시 대화방으로 이동
                     Intent intent = new Intent(view.getContext(), Message2Activity.class);
-<<<<<<< HEAD
-                    intent.putExtra("destinationUid", destinationUsers.get(position));         //상대방 UID를 인텐트에 담아서 보냄
-=======
+
                     intent.putExtra("destinationUid", destinationUsers.get(position));//상대방의 정보를
->>>>>>> d4503f2ddd2268ff5306235859808b01fece690d
 
                     //이동 효과주기 (오른쪽에서 왼쪽으로 밀기)
                     ActivityOptions activityOptions = null;
@@ -201,14 +170,9 @@ public class ChatActivity extends AppCompatActivity {
         @Override
         public int getItemCount() {
             return chatModels.size();
-<<<<<<< HEAD
-        } //chatModels의 크기 리턴
-
-        //리스트에 들어갈 각 뷰를 관리할 뷰홀더 클래스
-=======
         }
+
         //어뎁터에 자식 플레그먼트에 내용을 단다.
->>>>>>> d4503f2ddd2268ff5306235859808b01fece690d
         private class CustomViewHolder extends RecyclerView.ViewHolder {
             public ImageView imageView;   //프로필사진 담을 이미지뷰
             public TextView textView_title;  //상대방 이름 담을 텍스트뷰

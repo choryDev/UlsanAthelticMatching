@@ -51,14 +51,14 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class Message2Activity extends AppCompatActivity {
-    private String destinationUid;
+    private String destinationUid; //상대방uid
     private Button button;
     private EditText editText;
 
-    private String uid;
-    private String chatRoomUid;
+    private String uid;   //내uid
+    private String chatRoomUid;  //채팅uid
 
-    private RecyclerView recyclerView;
+    private RecyclerView recyclerView; //리싸이클러뷰
 
     private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy.MM.dd HH:mm");
 
@@ -76,13 +76,13 @@ public class Message2Activity extends AppCompatActivity {
         recyclerView = (RecyclerView) findViewById(R.id.messageActivity_recyclerview);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View view) {     //메세지클릭 버튼 눌렀을때
                 ChatModel chatModel = new ChatModel();
                 chatModel.users.put(uid, true);
                 chatModel.users.put(destinationUid, true);
 
 
-                if (chatRoomUid == null) {
+                if (chatRoomUid == null) {   //만약 채팅방이 없을 경우
                     button.setEnabled(false); //메시지 전송이 완료되기전엔 버튼 사용x
                     FirebaseDatabase.getInstance().getReference().child("chatrooms").push().setValue(chatModel).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
@@ -91,9 +91,9 @@ public class Message2Activity extends AppCompatActivity {
                         }
                     });
                 } else {
-                    ChatModel.Comment comment = new ChatModel.Comment();
-                    comment.uid = uid;
-                    comment.message = editText.getText().toString();
+                    ChatModel.Comment comment = new ChatModel.Comment();   //채팅방 모델 객체만듬
+                    comment.uid = uid;   //객체에 uid 저장
+                    comment.message = editText.getText().toString(); //메세지 문자열 저장
                     comment.timestamp = ServerValue.TIMESTAMP; //1970/1/1 시간을 뺀 밀리세컨즈값
                     FirebaseDatabase.getInstance().getReference().child("chatrooms").child(chatRoomUid).child("comments").push().setValue(comment).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
@@ -110,19 +110,19 @@ public class Message2Activity extends AppCompatActivity {
     }
     //푸시
     void sendGcm(){
-        Gson gson = new Gson();
+        Gson gson = new Gson();  //
 
-        String userName = FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
-        NotificationModel notificationModel = new NotificationModel();
-        notificationModel.to = destinationuserModel.pushToken;
-        notificationModel.notification.title = userName;
-        notificationModel.notification.text = editText.getText().toString();
+        String userName = FirebaseAuth.getInstance().getCurrentUser().getDisplayName();  //사용자 프로필 이름 가져옴
+        NotificationModel notificationModel = new NotificationModel();   //notificationModel객체 생성
+        notificationModel.to = destinationuserModel.pushToken;  //메세지 보내는 상대방 토큰가져옴
+        notificationModel.notification.title = userName;  //상대방 이름 가져옴
+        notificationModel.notification.text = editText.getText().toString();  //메세지내용 가져옴
         notificationModel.data.title = userName;  //푸시받을때 데이터 파싱
-        notificationModel.data.text = editText.getText().toString();
+        notificationModel.data.text = editText.getText().toString();  //data의 text에 메세지 내용 넣음
 
         RequestBody requestBody = RequestBody.create(gson.toJson(notificationModel), MediaType.parse("application/json; charset=utf8"));
         Request request = new Request.Builder()
-                .header("Content-Type","application/json")
+                .header("Content-Type","application/json") // 해당 서버키를 입력
                 .addHeader("Authorization","key=AAAAI_qLyCQ:APA91bFa8Ilp_4-nW7Bcr4cJqUfxUTrakNR5UpfNzm_QFXPJYpIiVqnzIx035ss4cy2HFtZ_3OpkWxkRXy-UJ-VBdgUvYwOzWD3woIWMWTEOxU2oL1lGPaQNvMKWkquxn931DU94zvHl")
                 .url("https://fcm.googleapis.com/fcm/send")
                 .post(requestBody)
@@ -224,13 +224,15 @@ public class Message2Activity extends AppCompatActivity {
 
             if (comments.get(position).uid.equals(uid)) {
                 //내가 말하는 부분
-                messageViewHolder.textView_message.setText(comments.get(position).message);
+                messageViewHolder.textView_message.setText(comments.get(position).message);   //
                 messageViewHolder.textView_message.setBackgroundResource(R.drawable.rightbubble);
                 messageViewHolder.linearLayout_destination.setVisibility(View.INVISIBLE); //내 프로필 감춤
                 messageViewHolder.textView_message.setTextSize(20);
                 messageViewHolder.linearLayout_main.setGravity(Gravity.RIGHT);
             } else {
                 //상대방 메세지
+
+                //상대방 프로필사진
                 Glide.with(holder.itemView.getContext())
                         .load(destinationuserModel.profileImageUrl)
                         .apply(new RequestOptions().circleCrop())
@@ -247,7 +249,7 @@ public class Message2Activity extends AppCompatActivity {
             long unixTime = (long)comments.get(position).timestamp;
             Date date = new Date(unixTime); //comments에서 가져온 시간을 담음
             simpleDateFormat.setTimeZone(TimeZone.getTimeZone("Asia/Seoul")); //서울시간에 맞게 데이터포맷을 바꿈
-            String time = simpleDateFormat.format(date); //바꾼 시간포맷을 스트림에 담음
+            String time = simpleDateFormat.format(date); //바꾼 시간포맷을 문자열에 담음
             messageViewHolder.textView_timestamp.setText(time); //타임스템프에 담음
 
         }

@@ -108,22 +108,12 @@ public class ChatActivity extends AppCompatActivity {
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                     //한번 user의 destinationUid 경로에 있는 내용의 정적 스냅샷을 읽어와서 전체 내용에 대한 변경을 읽고 수신 대기
-
                     //상대방 정보를 userModel 당음
-<<<<<<< HEAD
-                    UserModel userModel = dataSnapshot.getValue(UserModel.class);
-                    //이미지 로딩 라이브러리 userModel의 profileImageUrl을 가져옴 사진을 원형으로 자름 뷰홀더의 이미지뷰에 이미지를 남음
-                    Glide.with(customViewHolder.itemView.getContext())
-                            .load(userModel.profileImageUrl)
-                            .apply(new RequestOptions().circleCrop())
-                            .into(customViewHolder.imageView);
-=======
                     UserModel userModel = dataSnapshot.getValue(UserModel.class);//가져온 uid를 UserModel에 담아서 세팅
                     Glide.with(customViewHolder.itemView.getContext())    //이미지 로딩 라이브러리
                             .load(userModel.profileImageUrl)              //userModel의 profileImageUrl을 가져옴
                             .apply(new RequestOptions().circleCrop())     //사진을 원형으로 자름
                             .into(customViewHolder.imageView);            // 뷰홀더의 이미지뷰에 이미지를 남음
->>>>>>> 3cdd37920f63f83bee30498c3746609919f88c5b
                     customViewHolder.textView_title.setText(userModel.userName);  //뷰홀더의 textView_title의 userModel객체의 userName 값으로 담기
                 }
 
@@ -162,7 +152,7 @@ public class ChatActivity extends AppCompatActivity {
 
             //Timestamp 시간 포맷 변경
             simpleDateFormat.setTimeZone(TimeZone.getTimeZone("Asia/Seoul")); //서울시간에 맞게 데이터포맷을 바꿈
-            long unixTime = (long)chatModels.get(position).comments.get(lastMessageKey).timestamp;
+            long unixTime = (long) chatModels.get(position).comments.get(lastMessageKey).timestamp;
             Date date = new Date(unixTime);     //comments에서 가져온 시간을 담음
             customViewHolder.textView_timestamp.setText(simpleDateFormat.format(date)); //바꾼 시간포맷을 뷰홀더의 textView_timestamp에 담음
         }

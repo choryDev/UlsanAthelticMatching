@@ -51,7 +51,7 @@ public class AlarmActivity extends AppCompatActivity implements TimePickerDialog
         });
     }
 
-    @Override //기본 시간을 현재 시간으로 맞추는 함수
+    @Override //설정된 시간
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
         Calendar c = Calendar.getInstance();
         c.set(Calendar.HOUR_OF_DAY, hourOfDay);

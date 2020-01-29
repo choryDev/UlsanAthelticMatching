@@ -31,10 +31,11 @@ public class SplashActivity extends AppCompatActivity {
         mFirebaseRemoteConfig = FirebaseRemoteConfig.getInstance(); //Firebase에서 원격으로 조종이 가능한 Remoteconfig객체
         FirebaseRemoteConfigSettings configSettings = new FirebaseRemoteConfigSettings.Builder()
                 .setDeveloperModeEnabled(BuildConfig.DEBUG)
-                .build();
+                .build();  //개발자모드로 사용설정
         mFirebaseRemoteConfig.setConfigSettings(configSettings);
         mFirebaseRemoteConfig.setDefaults(R.xml.default_config);//Firebase Remoteconfig객체에서 색깔을 불러와서
                                                                 //네트워크가 연결이 되었을 경우 색깔이 바뀌게 된다
+        //원격 구성 서버에서 값을 가져오는 fetch()요청을 만듬 activateFetched()를 호출하여 해당 값을 앱에 적용
         mFirebaseRemoteConfig.fetch(0)//
                 .addOnCompleteListener(this, new OnCompleteListener<Void>() {
                     @Override
